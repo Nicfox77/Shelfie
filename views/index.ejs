@@ -1,0 +1,9 @@
+<%- include('partials/header') %>
+<h1>Welcome to BookTracker</h1>
+<p>Track your reading journey effortlessly.</p>
+<% if (user) { %>
+    <a href="/users/dashboard">Go to your dashboard</a>
+<% } else { %>
+    <a href="/users/login">Log In</a> | <a href="/users/register">Sign Up</a>
+<% } %>
+<%- include('partials/footer') %>
