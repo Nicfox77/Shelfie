@@ -76,9 +76,11 @@ input[type="text"] {
     align-items: center;
     gap: 5px;
 }
+
 .login-container a {
     text-decoration: none;
 }
+
 .divider {
     height: 20px;
     width: 1px;
