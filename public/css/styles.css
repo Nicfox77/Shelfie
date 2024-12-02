@@ -1,6 +1,7 @@
-body{
+*{
     font-family:'Lustria';
     color: black;
+    background-color: #FAF6E3;
 }
 
 h1{
@@ -9,6 +10,28 @@ h1{
     -webkit-text-stroke-color: #000;
     font-family: Lustria;
     font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+nav{
+    display: flex;
+}
+
+
+.searchForm{
+
+}
+
+.searchText{
+
+}
+
+.homePageText{
+    color: #000;
+    font-family: Lustria;
+    font-size: 24px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
