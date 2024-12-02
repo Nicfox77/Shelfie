@@ -1,0 +1,15 @@
+body{
+    font-family:'Lustria';
+    color: black;
+}
+
+h1{
+    color: #000;
+    -webkit-text-stroke-width: 1;
+    -webkit-text-stroke-color: #000;
+    font-family: Lustria;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
