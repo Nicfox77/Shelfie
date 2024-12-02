@@ -70,6 +70,22 @@ input[type="text"] {
     background-color: transparent;
 }
 
+
+.login-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.login-container a {
+    text-decoration: none;
+}
+.divider {
+    height: 20px;
+    width: 1px;
+    background-color: black;
+    margin: 0 2px;
+}
+
 /********** END OF NAVIGATION **********/
 
 
