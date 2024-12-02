@@ -6,8 +6,6 @@
 
 h1{
     color: #000;
-    -webkit-text-stroke-width: 1;
-    -webkit-text-stroke-color: #000;
     font-family: Lustria;
     font-size: 64px;
     font-style: normal;
@@ -15,18 +13,52 @@ h1{
     line-height: normal;
 }
 
+
+
+/********** NAVIGATION **********/
 nav{
     display: flex;
+    justify-content: space-between;
 }
 
+.navLinks{
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+}
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    gap: 8px;
+    font-weight: 800;
+
+}
+
+
+.navLinks a {
+    text-decoration: none;
+}
 
 .searchForm{
-
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.searchText{
 
+.searchText {
+    background: url('/imgs/icons/searchIcon.svg') no-repeat !important;
+    background-position: 0px center !important;
+    background-size: 13px !important;
+    background-color: transparent !important;
+    padding-left: 20px;
+    width: 200px;
+    border: none;
+    border-bottom: 1px solid #000;
 }
+
 
 .homePageText{
     color: #000;
@@ -36,3 +68,16 @@ nav{
     font-weight: 400;
     line-height: normal;
 }
+
+input[type="text"] {
+    border: none;
+    border-bottom: 1px solid #000;
+    background: none;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+/********** END OF NAVIGATION **********/
