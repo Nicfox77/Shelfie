@@ -1,0 +1,23 @@
+{
+  "apps": [
+    {
+      "name": "ShelfieApp",              // Name of your app
+      "script": "./app.mjs",            // Path to your entry file
+      "watch": true,                    // Enable watch mode
+      "ignore_watch": [                 // Ignore node_modules and logs
+        "node_modules",
+        "logs"
+      ],
+      "watch_options": {
+        "followSymlinks": false,        // Ensure symlinks aren't followed
+        "usePolling": true              // Enable polling for file changes (useful for network file systems)
+      },
+      "env": {
+        "NODE_ENV": "development"       // Environment variables for development
+      },
+      "env_production": {
+        "NODE_ENV": "production"        // Environment variables for production
+      }
+    }
+  ]
+}
