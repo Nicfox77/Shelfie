@@ -15,6 +15,7 @@ dotenv.config();
 // import bookRoutes from './routes/books.mjs';
 // import reviewRoutes from './routes/reviews.mjs';
 import indexRoutes from './routes/index.mjs';
+import dbTestRoutes from './routes/dbtest.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -50,21 +51,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Basic route
 app.use('/', indexRoutes);
 
-app.get('/dbtest', async (req, res) => {
-    try {
-        const [rows] = await pool.query('SELECT DATABASE() AS db_name;');
-        res.json({
-            success: true,
-            message: 'Database connection successful!',
-            database: rows[0]?.db_name || 'No database selected',
-        });
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to connect to the database',
-            error: err.message,
-        });
-    }
-});
+// Add the database test route
+app.use('/', dbTestRoutes);
+
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
