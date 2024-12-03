@@ -2,8 +2,13 @@ import express from 'express';
 // import session from 'express-session';
 // import flash from 'connect-flash';
 // import passport from 'passport';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import pool from './config/db.mjs';
+
+//load environment variables
+dotenv.config();
 
 // Import routes
 // import userRoutes from './routes/users.mjs';
@@ -46,6 +51,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) =>
 {
     res.render('index');
+});
+
+app.get('/dbtest', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT DATABASE() AS db_name;');
+        res.json({
+            success: true,
+            message: 'Database connection successful!',
+            database: rows[0]?.db_name || 'No database selected',
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to connect to the database',
+            error: err.message,
+        });
+    }
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
