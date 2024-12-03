@@ -1,22 +1,25 @@
 {
   "apps": [
     {
-      "name": "ShelfieApp",              // Name of your app
-      "script": "./app.mjs",            // Path to your entry file
-      "watch": true,                    // Enable watch mode
-      "ignore_watch": [                 // Ignore node_modules and logs
-        "node_modules",
-        "logs"
+      "name": "ShelfieApp",
+      "script": "./app.mjs",
+      "watch": true,
+      "ignore_watch": [
+        "node_modules",  // Prevent watching node_modules
+        "logs",          // Prevent watching logs directory
+        "*.log",         // Ignore specific log files
+        ".git",          // Ignore git-related changes
+        "tmp"            // Ignore temporary files
       ],
       "watch_options": {
-        "followSymlinks": false,        // Ensure symlinks aren't followed
-        "usePolling": true              // Enable polling for file changes (useful for network file systems)
+        "followSymlinks": false, // Avoid symlink loops
+        "usePolling": true       // Polling is safer for network filesystems
       },
       "env": {
-        "NODE_ENV": "development"       // Environment variables for development
+        "NODE_ENV": "development"
       },
       "env_production": {
-        "NODE_ENV": "production"        // Environment variables for production
+        "NODE_ENV": "production"
       }
     }
   ]
