@@ -12,7 +12,7 @@ dotenv.config();
 
 // Import routes
 // import userRoutes from './routes/users.mjs';
-// import bookRoutes from './routes/books.mjs';
+import bookRoutes from './routes/books.mjs';
 // import reviewRoutes from './routes/reviews.mjs';
 import indexRoutes from './routes/index.mjs';
 import dbTestRoutes from './routes/dbtest.mjs';
@@ -50,6 +50,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Basic route
 app.use('/', indexRoutes);
+// Explore page route
+app.use('/', bookRoutes);
 
 // Add the database test route
 app.use('/', dbTestRoutes);
