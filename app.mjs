@@ -14,7 +14,7 @@ dotenv.config();
 // import userRoutes from './routes/users.mjs';
 // import bookRoutes from './routes/books.mjs';
 // import reviewRoutes from './routes/reviews.mjs';
-// import indexRoutes from './routes/index.mjs';
+import indexRoutes from './routes/index.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,10 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 // Basic route
-app.get('/', (req, res) =>
-{
-    res.render('index');
-});
+app.use('/', indexRoutes);
 
 app.get('/dbtest', async (req, res) => {
     try {
