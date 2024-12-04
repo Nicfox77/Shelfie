@@ -14,65 +14,44 @@
         <% if (books && books.length > 0) { %>
             <% for (let book of books) { %>
                 <div class="exploreBook d-flex flex-column align-items-center col-12 col-sm-6 col-md-3 mb-4">
-                    <% if (book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail) { %>
-                        <div class="imgDiv mb-2">
-                            <% 
-                                // Get the thumbnail URL
-                                let thumbnail = book.volumeInfo.imageLinks.thumbnail;
-
-                                // Ensure the image URL uses https
-                                thumbnail = thumbnail.replace("http://", "https://");
-
-                                // Check for zoom parameter and replace it if present, or set zoom=3 by default
-                                if (thumbnail.includes("zoom=")) {
-                                    thumbnail = thumbnail.replace("zoom=1", "zoom=3");
-                                } else {
-                                    thumbnail = thumbnail.replace(/(img=\d)/, "$1&zoom=3");  // Add zoom=3 if no zoom parameter
-                                }
-                                %>
-                            <img src="<%= thumbnail %>" alt="Book Cover" class="exploreImg img-fluid">
-                        </div>
-                    <% } else { %>
-                        <!-- Use default thumbnail if no image is provided -->
-                        <div class="imgDiv mb-2">
-                            <img src="/imgs/defaultCover.png" alt="Default Book Cover" class="exploreImg img-fluid">
-                        </div>
-                    <% } %>
+                    <div class="imgDiv mb-2">
+                        <img src="<%= book.coverUrl %>" alt="Book Cover" class="exploreImg img-fluid">
+                    </div>
                     
                     <div class="exploreBookInfo d-flex justify-content-between mt-1">
                         <div class="text-start">
-                            <h4 class="mb-0"><%= book.volumeInfo.title %></h4>
-                            <p class="exploreAuthor"><%= book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown Author" %></p>
+                            <h4 class="mb-0"><%= book.title %></h4>
+                            <p class="exploreAuthor"><%= book.author %></p>
                         </div>
                         <div class="text-end">
-                            <% if (book.volumeInfo.averageRating) { %>
-                                <% if (book.volumeInfo.averageRating >= 4) { %>
+                            <% if (book.rating.average) { %>
+                                <% if (book.rating.average >= 4) { %>
                                     <div class="d-flex justify-content-end mb-1">
                                         <img src="/imgs/icons/star.svg" alt="star icon" class="me-1">
-                                        <h4 class="mb-0 me-1"><%= book.volumeInfo.averageRating %>/5</h4> 
+                                        <h4 class="mb-0 me-1"><%= book.rating.average %>/5</h4> 
                                     </div>
-                                    <% } else { %>
+                                <% } else { %>
                                     <div class="d-flex justify-content-end mb-1">
                                         <img src="/imgs/icons/starHalf.svg" alt="star icon" class="me-1">
-                                        <h4 class="mb-0 me-1"><%= book.volumeInfo.averageRating %>/5</h4> 
+                                        <h4 class="mb-0 me-1"><%= book.rating.average %>/5</h4> 
                                     </div>   
-                                    <% } %>
-                                <% } else { %>
-                                    <h4 class="mb-1 me-1">Unrated</h4>
-                                <% } %>  
+                                <% } %>
+                            <% } else { %>
+                                <h4 class="mb-1 me-1">Unrated</h4>
+                            <% } %>  
                             
-                            <% if (book.volumeInfo.categories && book.volumeInfo.categories.length > 0) { %>
+                            <% if (book.genres && book.genres.length > 0) { %>
                                 <div class="text-center">
-                                    <p class="category px-2"><%= book.volumeInfo.categories[0] %></p>
+                                    <p class="category px-2"><%= book.genres[0] %></p>
                                 </div>
                             <% } %>
                         </div>
                     </div>
-                    
                 </div>
-            <% } %>
+            <% } %>    
         <% } %>    
     </div>
-    <%- include('partials/footer') %>
+    
+<%- include('partials/footer') %>
 </body>
 </html>
