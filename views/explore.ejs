@@ -1,14 +1,32 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<h2>Discover New Reads and Expand Your Shelf</h2>
+    <h2>Discover New Reads and Expand Your Shelf</h2>
 
-<div class="exploreSearchForm">
-    <form class="searchForm">
-        <input type="text" placeholder="Search Book..." class="exploreSearch">
-        <button class="searchBtn" type="submit">Search</button>
-    </form>
-</div>
+    <div class="exploreSearchForm">
+        <form id="exploreForm">
+            <input name="search" type="text" placeholder="Search Book..." class="exploreSearch">
+            <button class="searchBtn" type="submit">Search</button>
+        </form>
+    </div>
+    
+    <div id="bookResults">
+        <% if (books && books.length > 0) { %>
+            <ul>
+                <% for (let book of books) { %>
+                    <% if (book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail) { %>
+                        <img src="<%= book.volumeInfo.imageLinks.thumbnail %>" alt="Book Cover">
+                    <% } %>
+                    <h4><%= book.volumeInfo.title %></h4>
+                    <p><%= book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown Author" %></p>
+                    <p><%= book.volumeInfo.description || "No description available." %></p>
+                    
 
-
-<%- include('partials/footer') %>
+                <% } %>
+            </ul>
+        <% } %>
+    
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

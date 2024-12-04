@@ -175,7 +175,7 @@ input[type="text"] {
     align-items: center;
 }
 
-.exploreSearchForm .searchForm{
+#exploreForm{
     display: flex;
     flex-direction: column;
     align-items: center;
