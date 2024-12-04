@@ -1,10 +1,30 @@
 import fetch from "node-fetch";
 import dotenv from 'dotenv';
+import pool from '../config/db.mjs';
+
 // Function to search for books using API
-export const searchBooks = async (search) =>
-{
+export const searchBooks = async (search) => {
     const apiKey = process.env.API_KEY;
     const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
+    
+    const conn = await pool.getConnection();
+    let sql = `SELECT isbn, title, author, genre, rating, image
+               FROM Books
+               WHERE title LIKE ?`;
+    let params = [`%${search}%`];
+    let [rows] = await conn.query(sql, params);
+    if (rows.length > 0) {
+        // Match MySql results to API format and return results
+        return rows.map((row) => ({
+            source: 'mysql',
+            isbn: row.isbn,
+            title: row.title,
+            authors: [row.author],
+            averageRating: row.rating,
+            categories: [row.genre],
+            image: row.image,
+        })); 
+    }
 
     try
     {
@@ -26,17 +46,56 @@ export const searchBooks = async (search) =>
         const uniqueBooks = [];
         const seen = new Set();
 
-        filteredBooks.forEach((book) =>
-        {
+        filteredBooks.forEach((book) => {
             const info = book.volumeInfo;
             const uniqueKey = `${info.title.toLowerCase()}|${info.authors?.join(",").toLowerCase()}`;
 
-            if (!seen.has(uniqueKey))
-            {
+            if (!seen.has(uniqueKey)) {
                 seen.add(uniqueKey);
-                uniqueBooks.push(book);
+                // Transform thumbnail URL
+                let thumbnail = info.imageLinks?.thumbnail || '/imgs/defaultCover.png';
+                if (thumbnail.startsWith('http://')) {
+                    thumbnail = thumbnail.replace('http://', 'https://');
+                }
+                if (thumbnail.includes('zoom=')) {
+                    thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
+                }
+                uniqueBooks.push({
+                    source: 'api',
+                    isbn: info.industryIdentifiers[0].identifier,
+                    title: info.title,
+                    authors: info.authors,
+                    averageRating: info.averageRating,
+                    categories: info.categories,
+                    image: thumbnail,
+                    description: info.description,
+                    publisher: info.publisher,
+                    published_date: info.publishedDate,
+                    page_count: info.pageCount,
+                });
             }
         });
+
+        // Insert unique books into MySql database
+        for (const book of uniqueBooks) {
+            if (book.isbn) {
+                let insertSql = `INSERT INTO Books (isbn, title, author, genre, description, publisher, page_count, published_date, rating, image)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 ON DUPLICATE KEY UPDATE
+                                 title = VALUES(title),
+                                 author = VALUES(author),
+                                 genre = VALUES(genre),
+                                 description = VALUES(description),
+                                 publisher = VALUES(publisher),
+                                 page_count = VALUES(page_count),
+                                 published_date = VALUES(published_date),
+                                 rating = VALUES(rating),
+                                 image = VALUES(image)`;
+                let insertParams = [book.isbn, book.title, book.authors.join(", "), book.categories.join(", "), book.description, book.publisher, 
+                                    book.page_count, book.published_date, book.averageRating, book.image];
+                await conn.query(insertSql, insertParams);
+            }
+        }
 
         return uniqueBooks;
     } catch (error)
@@ -46,7 +105,6 @@ export const searchBooks = async (search) =>
     }
 };
 
-export const selectSearch = async () =>
-{
+export const selectSearch = async () => {
     
 }
