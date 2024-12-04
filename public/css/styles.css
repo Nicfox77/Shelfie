@@ -4,6 +4,12 @@
     background-color: #FAF6E3;
 }
 
+body{
+    font-family:'Lustria';
+    color: black;
+    background-color: #FAF6E3;
+}
+
 h1{
     color: #000;
     font-family: Lustria;
@@ -21,10 +27,19 @@ h2{
     font-weight: 400;
     line-height: normal;
     text-align: center;
+    margin-bottom: 0;
 }
 
 footer{
     text-align: center;
+}
+
+p{
+    margin-bottom: 0;
+}
+
+hr{
+    opacity: 1;
 }
 
 
@@ -53,6 +68,7 @@ nav{
 
 .navLinks a {
     text-decoration: none;
+    color: #000;
 }
 
 .searchForm{
@@ -93,6 +109,7 @@ input[type="text"] {
 
 .login-container a {
     text-decoration: none;
+    color: #000;
 }
 
 .divider {
@@ -124,7 +141,6 @@ input[type="text"] {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin-top: -5%;
 }
 
 .homePageImage{
@@ -188,7 +204,44 @@ input[type="text"] {
     background: #000;
     color: white;
     font-size: 20px;
-    margin: 10px;
+    margin: 25px;
+}
+
+.searchBtn:hover{
+    cursor: pointer;
+}
+
+.imgDiv{
+    width: 65%;
+    height: 75%;
+}
+
+.exploreBookInfo{
+    width: 65%;
+}
+
+.exploreImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 7px 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.exploreBook h4{
+    font-size: 16px;
+}
+
+.exploreBook p{
+    font-size: 15px;
+}
+
+.exploreAuthor{
+    color: #969696;
+}
+
+.category{
+    background-color: #79ADDC;
+    border-radius: 5px;
 }
 
 /********** END OF EXPLORE PAGE **********/

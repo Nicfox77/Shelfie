@@ -1,31 +1,58 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-    <h2>Discover New Reads and Expand Your Shelf</h2>
+    <h2 class="mt-5">Discover New Reads and Expand Your Shelf</h2>
 
-    <div class="exploreSearchForm">
+    <div class="exploreSearchForm mt-5">
         <form id="exploreForm">
             <input name="search" type="text" placeholder="Search Book..." class="exploreSearch">
             <button class="searchBtn" type="submit">Search</button>
         </form>
     </div>
     
-    <div id="bookResults">
+    <div id="bookResults" class="row mx-auto mt-4">
         <% if (books && books.length > 0) { %>
-            <ul>
-                <% for (let book of books) { %>
+            <% for (let book of books) { %>
+                <div class="exploreBook d-flex flex-column align-items-center col-12 col-sm-6 col-md-3 mb-4">
                     <% if (book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail) { %>
-                        <img src="<%= book.volumeInfo.imageLinks.thumbnail %>" alt="Book Cover">
+                        <div class="imgDiv mb-2">
+                            <img src="<%= book.volumeInfo.imageLinks.thumbnail %>" alt="Book Cover" class="exploreImg img-fluid">
+                        </div>
                     <% } %>
-                    <h4><%= book.volumeInfo.title %></h4>
-                    <p><%= book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown Author" %></p>
-                    <p><%= book.volumeInfo.description || "No description available." %></p>
                     
-
-                <% } %>
-            </ul>
-        <% } %>
-    
+                    <div class="exploreBookInfo d-flex justify-content-between mt-1">
+                        <div class="text-start">
+                            <h4 class="mb-0"><%= book.volumeInfo.title %></h4>
+                            <p class="exploreAuthor"><%= book.volumeInfo.authors ? book.volumeInfo.authors[0] : "Unknown Author" %></p>
+                        </div>
+                        <div class="text-end">
+                            <% if (book.volumeInfo.averageRating) { %>
+                                <% if (book.volumeInfo.averageRating >= 4) { %>
+                                    <div class="d-flex justify-content-end mb-1">
+                                        <img src="/imgs/icons/star.svg" alt="star icon" class="me-1">
+                                        <h4 class="mb-0 me-1"><%= book.volumeInfo.averageRating %>/5</h4> 
+                                    </div>
+                                    <% } else { %>
+                                    <div class="d-flex justify-content-end mb-1">
+                                        <img src="/imgs/icons/starHalf.svg" alt="star icon" class="me-1">
+                                        <h4 class="mb-0 me-1"><%= book.volumeInfo.averageRating %>/5</h4> 
+                                    </div>   
+                                    <% } %>
+                                <% } else { %>
+                                    <h4 class="mb-1 me-1">Unrated</h4>
+                                <% } %>  
+                            
+                            <% if (book.volumeInfo.categories && book.volumeInfo.categories.length > 0) { %>
+                                <div class="text-center">
+                                    <p class="category px-2"><%= book.volumeInfo.categories[0] %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    
+                </div>
+            <% } %>
+        <% } %>    
     </div>
     <%- include('partials/footer') %>
 </body>
