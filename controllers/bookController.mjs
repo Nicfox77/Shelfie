@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 export const searchBooks = async (search) =>
 {
     const apiKey = process.env.API_KEY;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40`;
+    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
 
     try
     {
@@ -17,7 +17,7 @@ export const searchBooks = async (search) =>
         let filteredBooks = data.items.filter((item) =>
         {
             const info = item.volumeInfo;
-            const hasRequiredFields = info.title && info.authors && info.averageRating && info.categories;
+            const hasRequiredFields = info.title && info.authors && info.categories;
 
             return hasRequiredFields;
         });
@@ -45,3 +45,8 @@ export const searchBooks = async (search) =>
         return [];
     }
 };
+
+export const selectSearch = async () =>
+{
+    
+}
