@@ -17,7 +17,7 @@ export const searchBooks = async (search) =>
         let filteredBooks = data.items.filter((item) =>
         {
             const info = item.volumeInfo;
-            const hasRequiredFields = info.title && info.authors && info.categories;
+            const hasRequiredFields = info.title && info.authors && info.averageRating && info.categories;
 
             return hasRequiredFields;
         });
