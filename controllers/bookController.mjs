@@ -14,6 +14,15 @@ export const searchBooks = async (search) => {
     let params = [`%${search}%`];
     let [rows] = await conn.query(sql, params);
     if (rows.length > 0) {
+        // Convert rating
+        for (let row of rows) {
+            let rating = Number(row.rating); 
+            if (rating % 1 === 0) {
+                row.rating = rating.toFixed(0);  // Remove decimals
+            } else {
+                row.rating = rating.toFixed(1);  // Keep one decimal
+            }
+        }
         // Match MySql results to API format and return results
         return rows.map((row) => ({
             source: 'mysql',
@@ -64,9 +73,9 @@ export const searchBooks = async (search) => {
                     source: 'api',
                     isbn: info.industryIdentifiers[0].identifier,
                     title: info.title,
-                    authors: info.authors,
+                    authors: info.authors.join(", "),
                     averageRating: info.averageRating,
-                    categories: info.categories,
+                    categories: info.categories.join(", "),
                     image: thumbnail,
                     description: info.description,
                     publisher: info.publisher,
@@ -91,7 +100,7 @@ export const searchBooks = async (search) => {
                                  published_date = VALUES(published_date),
                                  rating = VALUES(rating),
                                  image = VALUES(image)`;
-                let insertParams = [book.isbn, book.title, book.authors.join(", "), book.categories.join(", "), book.description, book.publisher, 
+                let insertParams = [book.isbn, book.title, book.authors, book.categories, book.description, book.publisher, 
                                     book.page_count, book.published_date, book.averageRating, book.image];
                 await conn.query(insertSql, insertParams);
             }

@@ -24,7 +24,7 @@
                         <!-- Display title and author -->
                         <div class="text-start">
                             <h4 class="mb-0"><%= book.title %></h4>
-                            <p class="exploreAuthor"><%= book.authors ? book.authors.join(", ") : "Unknown Author" %></p>
+                            <p class="exploreAuthor"><%= book.authors %></p>
                         </div>
                         <!-- Display rating and category -->
                         <div class="text-end">
@@ -36,11 +36,9 @@
                             <% } else { %>
                                 <h4 class="mb-1 me-1">Unrated</h4>
                             <% } %>
-                            <% if (book.categories && book.categories.length > 0) { %>
-                                <div class="text-center">
-                                    <p class="category px-2"><%= book.categories[0] %></p>
-                                </div>
-                            <% } %>
+                            <div class="text-center">
+                                <p class="category px-2"><%= book.categories %></p>
+                            </div>
                         </div>
                     </div>
                 </div>
