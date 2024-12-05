@@ -71,10 +71,10 @@ export const searchBooks = async (search) => {
                     thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
                 }
                 // Format published date to YYYY-MM-DD if only year is provided
-                let formattedPublishedDate = book.published_date;
+                let formattedPublishedDate = info.publishedDate;
                 if (/^\d{4}$/.test(formattedPublishedDate)) {
                     formattedPublishedDate += '-01-01';
-}
+                }
                 uniqueBooks.push({
                     source: 'api',
                     isbn:  info.industryIdentifiers?.[0]?.identifier?.replace(/\D/g, ''),
