@@ -25,7 +25,9 @@
                     <div class="exploreBookInfo d-flex justify-content-between mt-1">
                         <!-- Display title and author -->
                         <div class="text-start">
-                            <h4 class="mb-0"><%= book.title %></h4>
+                            <a href="/Explore/bookView?isbn=<%= book.isbn %>">
+                                <h4 class="mb-0"><%= book.title %></h4>
+                            </a>  
                             <p class="exploreAuthor"><%= book.authors %></p>
                         </div>
                         <!-- Display rating and category -->

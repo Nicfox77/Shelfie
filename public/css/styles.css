@@ -42,6 +42,10 @@ hr{
     opacity: 1;
 }
 
+a{
+    text-decoration: none;
+    color: #000;
+}
 
 
 /********** NAVIGATION **********/
@@ -261,7 +265,7 @@ input[type="text"] {
 }
 
 .bookInfo{
-    width: 65%;
+    width: 70%;
 }
 
 .bookInfo h4{
@@ -274,7 +278,7 @@ input[type="text"] {
 
 .description{
     font-size: 18px;
-    width: 65%;
+    width: 70%;
 }
 
 /********** END OF BOOKVIEW PAGE **********/
