@@ -63,8 +63,18 @@ nav{
     margin-left: 10px;
     gap: 8px;
     font-weight: 800;
-
+    margin-right: 20px;
 }
+
+.logo-wrapper img {
+    display: inline-block;
+}
+
+.logo-wrapper p {
+    display: inline-block;
+    margin: 5px;
+}
+
 
 .navLinks a {
     text-decoration: none;

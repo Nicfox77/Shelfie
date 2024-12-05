@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1>Login</h1>
+            <form action="/login" method="POST">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% if (errors.length > 0) { %>
+    <ul>
+        <% errors.forEach(error => { %>
+            <li><%= error %></li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<%- include('partials/footer') %>

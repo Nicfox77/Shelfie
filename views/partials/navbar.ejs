@@ -1,25 +1,31 @@
 <nav class="p-4 pb-0">
-
-<div class="navLinks">
-    <div class="logo-wrapper">
-        <img src="/imgs/icons/shelfiIcon.svg" alt="shelfiIcon">
-        <p>Shelfie</p>
+    <div class="navLinks">
+        <div class="logo-wrapper">
+            <a href="/">
+                <img src="/imgs/icons/shelfiIcon.svg" alt="shelfiIcon">
+                <p>Shelfie</p>
+            </a>
+        </div>
+        <a href="/Explore">Explore</a>
+        <a href="/Shelf">Shelf</a>
+        <a href="/About">About</a>
     </div>
-    <a href="/Explore">Explore</a>
-    <a href="/Shelf">Shelf</a>
-    <a href="/About">About</a>
 
-</div>
+    <form class="searchForm">
+        <input name="search" type="text" placeholder="Search Book..." class="searchText">
+        <button type="submit" hidden>Search</button>
+    </form>
 
-<form class="searchForm">
-    <input name="search" type="text" placeholder="Search Book..." class="searchText">
-    <button type="submit" hidden >Search</button>
-
-<div class="login-container">
-    <img src="/imgs/icons/accountIcon.svg" alt="shelfiIcon">
-    <div class="divider"></div>
-    <a href="/Login">Sign In</a>
-</div>
-</form>
-
+    <div class="login-container">
+        <% if (user) { %>
+            <p>Welcome, <%- user.username%> </p>
+            <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+            <div class="divider"></div>
+            <a href="/logout">Logout</a>
+        <% } else { %>
+            <img src="/imgs/icons/accountIcon.svg" alt="shelfiIcon">
+            <div class="divider"></div>
+            <a href="/login">Sign In</a>
+        <% } %>
+    </div>
 </nav>
