@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+    <h2 class="bookInfoTitle mt-5">Your Next Chapter Starts Here</h2>
+
+    <div class="row mx-auto my-5">
+        <div class="col-12 col-md-6 d-flex justify-content-center align-items-top">
+            <img src="<%= book.image %>" alt="Book Cover" class="bookViewImg img-fluid">
+        </div>
+    
+        <div class="col-12 col-md-6 d-flex mt-4">
+            <div class="d-flex flex-column">
+                <div class="bookInfo d-flex justify-content-between">
+                    <!-- Display title and author -->
+                    <div class="text-start me-5">
+                        <h4 class="mb-0"><%= book.title %></h4>
+                        <p class="exploreAuthor"><%= book.author %></p>
+                    </div>
+                    <!-- Display rating and category -->
+                    <div class="text-end">
+                        <% if (book.rating) { %>
+                            <div class="d-flex justify-content-end mb-1">
+                                <!-- Display stars depending on rating -->
+                                <% 
+                                    let fullStars = Math.floor(book.rating); // Number of full stars
+                                    let hasHalfStar = book.rating % 1 >= 0.5; // Check if there's a half star
+                                    let emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // Remaining empty stars
+                                %>
+                                
+                                <% for (let i = 0; i < fullStars; i++) { %>
+                                    <img src="/imgs/icons/star.svg" alt="full star icon" class="me-1">
+                                <% } %>
+                                
+                                <% if (hasHalfStar) { %>
+                                    <img src="/imgs/icons/starHalf.svg" alt="half star icon" class="me-1">
+                                <% } %>
+
+                                <% for (let i = 0; i < emptyStars; i++) { %>
+                                    <img src="/imgs/icons/starEmpty.svg" alt="empty star icon" class="me-1">
+                                <% } %>
+
+                                <p class="mb-0 mx-1"><%= Number.isInteger(Number(book.rating)) ? Number(book.rating).toFixed(0) : book.rating %>/5</p>
+                            </div>
+                        <% } else { %>
+                            <p class="mb-1 me-1">Unrated</p>
+                        <% } %>
+                        <div class="text-center">
+                            <p class="category px-5"><%= book.genre %></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="description mt-4">
+                    <p><%= book.description %></p>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+<%- include('partials/footer') %>
+</body>
+</html>

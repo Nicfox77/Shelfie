@@ -71,11 +71,11 @@ export const searchBooks = async (search) => {
                 }
                 uniqueBooks.push({
                     source: 'api',
-                    isbn: info.industryIdentifiers[0].identifier,
-                    title: info.title,
+                    isbn:  info.industryIdentifiers?.[0]?.identifier?.replace(/\D/g, ''),
+                    title: info.title?.replace(/[^a-zA-Z0-9\s]/g, ''),
                     authors: info.authors.join(", "),
                     averageRating: info.averageRating,
-                    categories: info.categories.join(", "),
+                    categories: info.categories.join(", ").replace(/[^\x00-\x7F]/g, ''),
                     image: thumbnail,
                     description: info.description,
                     publisher: info.publisher,

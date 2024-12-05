@@ -17,7 +17,9 @@
                 <div class="exploreBook d-flex flex-column align-items-center col-12 col-sm-6 col-md-3 mb-4">
                     <!-- Display book cover image -->
                     <div class="imgDiv mb-2">
-                        <img src="<%= book.image %>" alt="Book Cover" class="exploreImg img-fluid">
+                        <a href="/Explore/bookView?isbn=<%= book.isbn %>">
+                            <img src="<%= book.image %>" alt="Book Cover" class="exploreImg img-fluid">
+                        </a>
                     </div>
     
                     <div class="exploreBookInfo d-flex justify-content-between mt-1">

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { searchBooks } from '../controllers/bookController.mjs';
+import pool from '../config/db.mjs';
 
 const router = Router();
 
@@ -16,5 +17,16 @@ router.get('/Explore', async (req, res) => {
     res.render('explore', { books, user: req.user });
 });
 
+router.get('/Explore/bookView', async (req, res) => {
+    const isbn = req.query.isbn;
+    let rows = [];
+    const conn = await pool.getConnection();
+    let sql = `SELECT * 
+                    FROM Books
+                    WHERE isbn = ?`;
+    let [row] = await conn.query(sql, [isbn]);
+
+    res.render('bookview', {'book': row[0]});
+});
 
 export default router;
