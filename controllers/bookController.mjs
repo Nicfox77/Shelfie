@@ -10,7 +10,8 @@ export const searchBooks = async (search) => {
     const conn = await pool.getConnection();
     let sql = `SELECT isbn, title, author, genre, rating, image
                FROM Books
-               WHERE title LIKE ?`;
+               WHERE title LIKE ?
+               ORDER BY rating DESC`;
     let params = [`%${search}%`];
     let [rows] = await conn.query(sql, params);
     if (rows.length > 0) {
@@ -69,6 +70,11 @@ export const searchBooks = async (search) => {
                 if (thumbnail.includes('zoom=')) {
                     thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
                 }
+                // Format published date to YYYY-MM-DD if only year is provided
+                let formattedPublishedDate = book.published_date;
+                if (/^\d{4}$/.test(formattedPublishedDate)) {
+                    formattedPublishedDate += '-01-01';
+}
                 uniqueBooks.push({
                     source: 'api',
                     isbn:  info.industryIdentifiers?.[0]?.identifier?.replace(/\D/g, ''),
@@ -79,7 +85,7 @@ export const searchBooks = async (search) => {
                     image: thumbnail,
                     description: info.description,
                     publisher: info.publisher,
-                    published_date: info.publishedDate,
+                    published_date: formattedPublishedDate,
                     page_count: info.pageCount,
                 });
             }
