@@ -71,6 +71,10 @@ export const searchBooks = async (search) => {
                 if (thumbnail.includes('zoom=')) {
                     thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
                 }
+                if (thumbnail.includes('&edge=curl'))
+                {
+                    thumbnail = thumbnail.replace('&edge=curl', '');
+                }
                 // Format published date to YYYY-MM-DD if only year/month is provided
                 let formattedPublishedDate = info.publishedDate;
                 if (formattedPublishedDate) {
