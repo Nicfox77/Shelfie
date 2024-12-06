@@ -131,3 +131,76 @@ export const requestPasswordReset = async (req, res) => {
         }
     }
 };
+
+export const showNewPasswordForm = async (req, res) => {
+    const { token } = req.query;
+    const errors = [];
+
+    if (!token) {
+        errors.push({ message: 'Invalid reset link' });
+        res.render('reset-password', { errors });
+    } else {
+        if (process.env.USE_REDIS === 'true') {
+            const { default: redisClient } = await import('../config/redis.mjs');
+            const tokenKey = `password-reset:${token}`;
+            const userId = await redisClient.get(tokenKey);
+            if (!userId) {
+                errors.push({ message: 'Invalid reset link' });
+                res.render('reset-password', { errors });
+            } else {
+                res.render('reset-password', { errors, token });
+            }
+        } else {
+            res.render('reset-password', { errors, token });
+        }
+    }
+};
+
+export const setNewPassword = async (req, res) => {
+    const { token, password, password2 } = req.body;
+    const errors = [];
+
+    if (!token) {
+        errors.push({ message: 'Invalid reset link' });
+    }
+
+    if (!password || !password2) {
+        errors.push({ message: 'Please enter all fields' });
+    }
+
+    if (password !== password2) {
+        errors.push({ message: 'Passwords do not match' });
+    }
+
+    if (password.length < 8) {
+        errors.push({ message: 'Password must be at least 8 characters' });
+    }
+
+    if (errors.length > 0) {
+        res.render('reset-password', { errors, token });
+    } else {
+        if (process.env.USE_REDIS === 'true') {
+            const { default: redisClient } = await import('../config/redis.mjs');
+            const tokenKey = `password-reset:${token}`;
+            const userId = await redisClient.get(tokenKey);
+            if (!userId) {
+                errors.push({ message: 'Invalid reset link' });
+                res.render('reset-password', { errors, token });
+            } else {
+                try {
+                    const salt = await bcrypt.genSalt(10);
+                    const hashedPassword = await bcrypt.hash(password, salt);
+                    await pool.query('UPDATE Users SET password_hash = ? WHERE user_id = ?', [hashedPassword, userId]);
+                    await redisClient.del(tokenKey);
+                    req.flash('success_msg', 'Password reset successfully');
+                    res.redirect('/login');
+                } catch (err) {
+                    console.error(err);
+                    res.redirect('/reset-password');
+                }
+            }
+        } else {
+            res.render('reset-password', { errors, token });
+        }
+    }
+};

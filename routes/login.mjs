@@ -10,5 +10,7 @@ router.post('/register', loginController.register);
 router.get('/logout', loginController.logout);
 router.get("/password-reset", loginController.showPasswordResetForm);
 router.post("/password-reset", loginController.requestPasswordReset);
+router.get("/reset-password", loginController.showNewPasswordForm);
+router.post("/reset-password", loginController.setNewPassword);
 
 export default router;
