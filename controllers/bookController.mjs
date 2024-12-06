@@ -49,6 +49,9 @@ export const searchBooks = async (search) => {
         {
             const info = item.volumeInfo;
             const hasRequiredFields = info.title && info.authors && info.averageRating && info.categories;
+            const hasValidIsbn = item.volumeInfo.industryIdentifiers && 
+                         item.volumeInfo.industryIdentifiers.some(identifier =>
+                            identifier.type === 'ISBN_13' || identifier.type === 'ISBN_10');
 
             return hasRequiredFields;
         });

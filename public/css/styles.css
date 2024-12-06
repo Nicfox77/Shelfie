@@ -67,7 +67,6 @@ nav{
     margin-left: 10px;
     gap: 8px;
     font-weight: 800;
-    margin-right: 20px;
 }
 
 .logo-wrapper img {
@@ -91,6 +90,11 @@ nav{
     gap: 8px;
 }
 
+.searchLoginContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .searchText {
     background: url('/imgs/icons/searchIcon.svg') no-repeat !important;
