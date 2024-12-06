@@ -300,8 +300,8 @@ input[type="text"] {
 
 
 
-/********** SIGN UP FORM **********/
-.signUpContainer {
+/********** SIGN UP FORM / LOGIN FORM **********/
+.signContainer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -361,7 +361,6 @@ input[type="text"] {
     background-color: black;
     color: white;
     font-size: 18px;
-    font-weight: bold;
     cursor: pointer;
 }
 
@@ -431,4 +430,4 @@ input[type="text"] {
     background-color: #D8DBBD;
 }
 
-/********** END OF SIGN UP FORM **********/
+/********** END OF SIGN UP / LOGIN FORM **********/
