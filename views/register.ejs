@@ -22,20 +22,29 @@
             <p>Already have an account?</p> 
             <a href="/signin" class="signIn">Sign in</a>
         </div>
+
+
+        <div class="errorMsgForm">
+        <% if (errors.length> 0) { %>
+            <ul>
+                <% errors.forEach(error=> { %>
+                    <li>
+                        <%= error.message %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+        </div>
     </div>
 
+    <!--TODO: Add a media query and hide this when we are on mobile -->
     <div class="formImage">
         <h1 >Join Shelfie and Start Tracking Your Reading Journey Today!</h1>
         <img src="/imgs/formImg.png" alt="Image" class="homePageImage">
-        </div>
+    </div>
+
 </div>
 
-<% if (errors.length > 0) { %>
-    <ul>
-        <% errors.forEach(error => { %>
-            <li><%= error.message %></li>
-        <% }) %>
-    </ul>
-<% } %>
+
 
 <%- include('partials/footer') %>

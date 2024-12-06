@@ -325,7 +325,7 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* margin-left: 5%; */
+    margin-left: 5%;
     
 }
 
@@ -409,6 +409,10 @@ input[type="text"] {
   font-size: 30px;
   margin-left: 1%;
 }
+.formImage> img{
+   
+    margin-left: 5%;
+}
 
 .formIcon{
     background-color: #D8DBBD;
@@ -417,5 +421,14 @@ input[type="text"] {
     align-self: center;
 }
 
+.errorMsgForm{
+    background-color: #D8DBBD;
+}
+.errorMsgForm> ul {
+    background-color: #D8DBBD;
+}
+.errorMsgForm > ul > li {
+    background-color: #D8DBBD;
+}
 
 /********** END OF SIGN UP FORM **********/
