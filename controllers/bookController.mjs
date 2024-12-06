@@ -53,7 +53,7 @@ export const searchBooks = async (search) => {
                          item.volumeInfo.industryIdentifiers.some(identifier =>
                             identifier.type === 'ISBN_13' || identifier.type === 'ISBN_10');
 
-            return hasRequiredFields;
+            return hasRequiredFields && hasValidIsbn;
         });
 
         // Remove duplicates by title (and optionally authors)
