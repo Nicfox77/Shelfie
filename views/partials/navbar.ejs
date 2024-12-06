@@ -1,20 +1,21 @@
 <nav class="p-4 pb-0">
-    <div class="navLinks">
-        <div class="logo-wrapper">
-            <a href="/">
-                <img src="/imgs/icons/shelfiIcon.svg" alt="shelfiIcon">
-                <p>Shelfie</p>
-            </a>
-        </div>
-        <a href="/Explore">Explore</a>
-        <a href="/Shelf">Shelf</a>
-        <a href="/About">About</a>
-    </div>
 
-    <form class="searchForm">
-        <input name="search" type="text" placeholder="Search Book..." class="searchText">
-        <button type="submit" hidden>Search</button>
-    </form>
+<div class="navLinks">
+    <a href="/">
+        <div  class="logo-wrapper">
+            <img src="/imgs/icons/shelfiIcon.svg" alt="shelfiIcon">
+            <p>Shelfie</p>
+        </div>
+    </a>
+    <a href="/Explore">Explore</a>
+    <a href="/Shelf">Shelf</a>
+    <a href="/About">About</a>
+
+</div>
+
+<form class="searchForm" action="/Explore" method="get">
+    <input name="search" type="text" placeholder="Search Book..." class="searchText">
+    <button type="submit" hidden >Search</button>
 
     <div class="login-container">
         <% if (user) { %>

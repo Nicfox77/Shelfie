@@ -42,6 +42,10 @@ hr{
     opacity: 1;
 }
 
+a{
+    text-decoration: none;
+    color: #000;
+}
 
 
 /********** NAVIGATION **********/
@@ -233,7 +237,7 @@ input[type="text"] {
 .exploreImg{
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    /* object-fit: cover; */
     box-shadow: 7px 5px 5px 0 rgba(0, 0, 0, 0.3);
 }
 
@@ -252,6 +256,39 @@ input[type="text"] {
 .category{
     background-color: #79ADDC;
     border-radius: 5px;
+    color: white;
 }
 
 /********** END OF EXPLORE PAGE **********/
+
+
+/********** BOOKVIEW PAGE **********/
+
+.bookInfoTitle{
+    font-size: 38px;
+}
+
+.bookViewImg{
+    width: 70%;
+    height: 85%;
+    box-shadow: 7px 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.bookInfo{
+    width: 70%;
+}
+
+.bookInfo h4{
+    font-size: 34px;
+}
+
+.bookInfo p{
+    font-size: 22px;
+}
+
+.description{
+    font-size: 18px;
+    width: 70%;
+}
+
+/********** END OF BOOKVIEW PAGE **********/
