@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import passport from 'passport';
 import pool from '../config/db.mjs';
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
 
 export const showLoginForm = (req, res) => {
     res.render('login', { errors: req.flash('error') || [] });
@@ -70,4 +72,62 @@ export const logout = (req, res) => {
         }
         res.redirect('/');
     });
+};
+
+export const showPasswordResetForm = (req, res) => {
+    res.render('password-reset', { errors: req.flash('error') || [] });
+}
+
+export const requestPasswordReset = async (req, res) => {
+    const { email } = req.body;
+    const errors = [];
+
+    if (!email) {
+        errors.push({ message: 'Please enter your email' });
+    }
+
+    if (errors.length > 0) {
+        res.render('password-reset', { errors });
+    } else {
+        try {
+            const [users] = await pool.query('SELECT * FROM Users WHERE email = ?', [email]);
+            if (users.length === 0) {
+                errors.push({ message: 'Email not registered' });
+                res.render('password-reset', { errors });
+            } else {
+                const user = users[0];
+                const token = crypto.randomBytes(32).toString('hex');
+                const tokenKey = `password-reset:${token}`;
+
+                if (process.env.USE_REDIS === 'true') {
+                    const { default: redisClient } = await import('../config/redis.mjs');
+                    await redisClient.set(tokenKey, user.user_id, { EX: 3600 }); // Token expires in 1 hour
+                }
+
+                const transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: process.env.EMAIL_USER,
+                        pass: process.env.EMAIL_PASSWORD
+                    }
+                });
+
+                const resetLink = `${req.protocol}://${req.get('host')}/reset-password?token=${token}`;
+                const mailOptions = {
+                    from: process.env.EMAIL_USER,
+                    to: email,
+                    subject: 'Password Reset',
+                    text: `You requested a password reset. Click the link to reset your password: ${resetLink}`
+                };
+
+                await transporter.sendMail(mailOptions);
+
+                req.flash('success_msg', 'Password reset email sent');
+                res.redirect('/login');
+            }
+        } catch (err) {
+            console.error(err);
+            res.redirect('/password-reset');
+        }
+    }
 };
