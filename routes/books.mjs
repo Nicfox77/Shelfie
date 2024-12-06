@@ -20,13 +20,19 @@ router.get('/Explore', async (req, res) => {
 router.get('/Explore/bookView', async (req, res) => {
     const isbn = req.query.isbn;
     let rows = [];
-    const conn = await pool.getConnection();
-    let sql = `SELECT * 
-                    FROM Books
-                    WHERE isbn = ?`;
-    let [row] = await conn.query(sql, [isbn]);
-
-    res.render('bookview', {'book': row[0]});
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        let sql = `SELECT * 
+                        FROM Books
+                        WHERE isbn = ?`;
+        let [row] = await conn.query(sql, [isbn]);
+    
+        res.render('bookview', {'book': row[0]});
+    } finally {
+        conn.release();
+    }
+    
 });
 
 export default router;

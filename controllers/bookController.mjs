@@ -8,13 +8,14 @@ export const searchBooks = async (search) => {
     const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
     
     const conn = await pool.getConnection();
-    let sql = `SELECT isbn, title, author, genre, rating, image
-               FROM Books
-               WHERE title LIKE ?
-               ORDER BY rating DESC`;
-    let params = [`%${search}%`];
-    let [rows] = await conn.query(sql, params);
-    if (rows.length > 0) {
+    try {
+        let sql = `SELECT isbn, title, author, genre, rating, image
+        FROM Books
+        WHERE title LIKE ?
+        ORDER BY rating DESC`;
+        let params = [`%${search}%`];
+        let [rows] = await conn.query(sql, params);
+        if (rows.length > 0) {
         // Convert rating
         for (let row of rows) {
             let rating = Number(row.rating); 
@@ -34,10 +35,10 @@ export const searchBooks = async (search) => {
             categories: [row.genre],
             image: row.image,
         })); 
-    }
+        }
 
-    try
-    {
+        try
+        {
         const response = await fetch(url);
         const data = await response.json();
 
@@ -99,17 +100,17 @@ export const searchBooks = async (search) => {
         for (const book of uniqueBooks) {
             if (book.isbn) {
                 let insertSql = `INSERT INTO Books (isbn, title, author, genre, description, publisher, page_count, published_date, rating, image)
-                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                                 ON DUPLICATE KEY UPDATE
-                                 title = VALUES(title),
-                                 author = VALUES(author),
-                                 genre = VALUES(genre),
-                                 description = VALUES(description),
-                                 publisher = VALUES(publisher),
-                                 page_count = VALUES(page_count),
-                                 published_date = VALUES(published_date),
-                                 rating = VALUES(rating),
-                                 image = VALUES(image)`;
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                ON DUPLICATE KEY UPDATE
+                                title = VALUES(title),
+                                author = VALUES(author),
+                                genre = VALUES(genre),
+                                description = VALUES(description),
+                                publisher = VALUES(publisher),
+                                page_count = VALUES(page_count),
+                                published_date = VALUES(published_date),
+                                rating = VALUES(rating),
+                                image = VALUES(image)`;
                 let insertParams = [book.isbn, book.title, book.authors, book.categories, book.description, book.publisher, 
                                     book.page_count, book.published_date, book.averageRating, book.image];
                 await conn.query(insertSql, insertParams);
@@ -117,11 +118,15 @@ export const searchBooks = async (search) => {
         }
 
         return uniqueBooks;
-    } catch (error)
-    {
+        } catch (error)
+        {
         console.error("Error fetching books:", error);
         return [];
+        }
+    } finally {
+        conn.release();
     }
+    
 };
 
 export const selectSearch = async () => {
