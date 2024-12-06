@@ -70,10 +70,14 @@ export const searchBooks = async (search) => {
                 if (thumbnail.includes('zoom=')) {
                     thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
                 }
-                // Format published date to YYYY-MM-DD if only year is provided
+                // Format published date to YYYY-MM-DD if only year/month is provided
                 let formattedPublishedDate = info.publishedDate;
-                if (/^\d{4}$/.test(formattedPublishedDate)) {
-                    formattedPublishedDate += '-01-01';
+                if (formattedPublishedDate) {
+                    if (/^\d{4}$/.test(formattedPublishedDate)) {
+                        formattedPublishedDate += '-01-01'; // Add default month and day
+                    } else if (/^\d{4}-\d{2}$/.test(formattedPublishedDate)) {
+                        formattedPublishedDate += '-01'; // Add default day
+                    }
                 }
                 uniqueBooks.push({
                     source: 'api',
