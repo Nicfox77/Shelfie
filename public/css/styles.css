@@ -67,7 +67,6 @@ nav{
     margin-left: 10px;
     gap: 8px;
     font-weight: 800;
-    margin-right: 20px;
 }
 
 .logo-wrapper img {
@@ -91,6 +90,11 @@ nav{
     gap: 8px;
 }
 
+.searchLoginContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .searchText {
     background: url('/imgs/icons/searchIcon.svg') no-repeat !important;
@@ -227,7 +231,7 @@ input[type="text"] {
 
 .imgDiv{
     width: 70%;
-    height: 80%;
+    height: 75%;
 }
 
 .exploreBookInfo{
@@ -292,3 +296,138 @@ input[type="text"] {
 }
 
 /********** END OF BOOKVIEW PAGE **********/
+
+
+
+
+/********** SIGN UP FORM / LOGIN FORM **********/
+.signContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Full-screen height */
+    background-color: #FAF6E3;
+    /* Page background */
+}
+
+.formContainer {
+    background-color: #D8DBBD;
+    /* Form-specific background */
+    color: #000;
+    /* Ensure text stays black */
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 5%;
+    
+}
+
+.formContainer h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    background-color: #D8DBBD;
+}
+
+.formContainer input {
+    border: none;
+    border-bottom: 1px solid #000;
+    background: none;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+    color: black;
+    /* Ensure input text is black */
+    width: 100%;
+    background-color: #D8DBBD;
+}
+
+.formContainer input::placeholder {
+    color: #6b6b6b;
+    /* Placeholder color */
+}
+
+.formContainer button {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.formContainer button:hover {
+    background-color: #333;
+}
+
+.formContainer a {
+    color: black;
+    font-size: 14px;
+    background-color: #D8DBBD;
+}
+
+.formFooter{
+    background-color:#D8DBBD; 
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.formFooter > p {
+    background-color: #D8DBBD;
+}
+
+.formFooter> a {
+    background-color:#D8DBBD;
+    text-decoration: underline;
+}
+
+.buttonBG{
+    background-color: #D8DBBD;
+    padding: 10px;
+}
+
+.formStyle{
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Adds space between inputs */
+    background-color: #D8DBBD;
+}
+
+.formImage > h1{
+ text-align: center;
+  font-size: 30px;
+  margin-left: 1%;
+}
+.formImage> img{
+   
+    margin-left: 5%;
+}
+
+.formIcon{
+    background-color: #D8DBBD;
+    width: 80px;
+    height: 80px;
+    align-self: center;
+}
+
+.errorMsgForm{
+    background-color: #D8DBBD;
+}
+.errorMsgForm> ul {
+    background-color: #D8DBBD;
+}
+.errorMsgForm > ul > li {
+    background-color: #D8DBBD;
+}
+
+/********** END OF SIGN UP / LOGIN FORM **********/

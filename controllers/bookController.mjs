@@ -49,8 +49,11 @@ export const searchBooks = async (search) => {
         {
             const info = item.volumeInfo;
             const hasRequiredFields = info.title && info.authors && info.averageRating && info.categories;
+            const hasValidIsbn = item.volumeInfo.industryIdentifiers && 
+                         item.volumeInfo.industryIdentifiers.some(identifier =>
+                            identifier.type === 'ISBN_13' || identifier.type === 'ISBN_10');
 
-            return hasRequiredFields;
+            return hasRequiredFields && hasValidIsbn;
         });
 
         // Remove duplicates by title (and optionally authors)
@@ -70,6 +73,10 @@ export const searchBooks = async (search) => {
                 }
                 if (thumbnail.includes('zoom=')) {
                     thumbnail = thumbnail.replace(/zoom=\d+/, 'zoom=3');
+                }
+                if (thumbnail.includes('&edge=curl'))
+                {
+                    thumbnail = thumbnail.replace('&edge=curl', '');
                 }
                 // Format published date to YYYY-MM-DD if only year/month is provided
                 let formattedPublishedDate = info.publishedDate;

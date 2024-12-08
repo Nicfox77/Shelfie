@@ -1,40 +1,51 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Register</h1>
-            <form action="/register" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="password2">Confirm Password</label>
-                    <input type="password" class="form-control" id="password2" name="password2" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
+<div class="signContainer">
+    <div class="formContainer">
+        <img src="/imgs/icons/accountIcon.svg" alt="User Icon" class="formIcon">
+        <h1>Sign Up</h1>
+        <form action="/register" method="POST" class="formStyle">
+             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            <input type="text" id="username" name="username" placeholder="User Name" required>
+            <input type="email" id="email" name="email" placeholder="Email"required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="password2" name="password2" placeholder="Confirm Password" required>
+            
+            <div class="buttonBG">
+                <button type="submit">Sign up</button>
+            </div>
+            
+        </form>
+
+        <div class="formFooter">
+            <p>Already have an account?</p> 
+            <a href="/login" class="signIn">Sign in</a>
+        </div>
+
+
+        <div class="errorMsgForm">
+        <% if (errors.length> 0) { %>
+            <ul>
+                <% errors.forEach(error=> { %>
+                    <li>
+                        <%= error.message %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
         </div>
     </div>
+
+    <!--TODO: Add a media query and hide this when we are on mobile -->
+    <div class="formImage">
+        <h1 >Join Shelfie and Start Tracking Your Reading Journey Today!</h1>
+        <img src="/imgs/formImg.png" alt="Image" class="homePageImage">
+    </div>
+
 </div>
 
-<% if (errors.length > 0) { %>
-    <ul>
-        <% errors.forEach(error => { %>
-            <li><%= error.message %></li>
-        <% }) %>
-    </ul>
-<% } %>
+
 
 <%- include('partials/footer') %>

@@ -13,10 +13,11 @@
 
 </div>
 
-<form class="searchForm" action="/Explore" method="get">
-    <input name="search" type="text" placeholder="Search Book..." class="searchText">
-    <button type="submit" hidden >Search</button>
-
+<div class="searchLoginContainer">
+    <form class="searchForm me-3" action="/Explore" method="get">
+        <input name="search" type="text" placeholder="Search Book..." class="searchText">
+        <button type="submit" hidden >Search</button>
+    </form>
 
     <div class="login-container">
         <% if (user) { %>
@@ -30,4 +31,6 @@
             <a href="/login">Sign In</a>
         <% } %>
     </div>
+</div>
+
 </nav>

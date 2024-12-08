@@ -1,35 +1,44 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1>Login</h1>
-            <form action="/login" method="POST">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-primary">Login</button>
-                <a href="/password-reset">Forgot Password?</a>
-            </form>
+<div class="signContainer">
+    <div class="formContainer">
+        <img src="/imgs/icons/accountIcon.svg" alt="User Icon" class="formIcon">
+        <h1>Login</h1>
+        <form action="/login" method="POST" class="formStyle">
+            <input type="text" id="username" name="username" placeholder="User Name" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <a href="/password-reset" class="signIn">Forgot password?</a>
+            
+            <div class="buttonBG">
+                <button type="submit">Login</button>
+            </div>
+        </form>
+
+        <div class="formFooter">
+            <p>Don't have an account?</p>
+            <a href="/register" class="signIn">Sign up</a>
+            <br>
+        </div>
+
+        <div class="errorMsgForm">
+            <% if (errors.length> 0) { %>
+                <ul>
+                    <% errors.forEach(error=> { %>
+                        <li>
+                            <%= error.message %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
         </div>
     </div>
+
+    <!-- TODO REMOVE THIS WHEN WE ARE ON MOBILE -->
+    <div class="formImage">
+        <h1>Welcome Back to Shelfie!</h1>
+        <img src="/imgs/formImg.png" alt="Image" class="homePageImage">
+    </div>
 </div>
-
-
-
-<% if (errors.length > 0) { %>
-    <ul>
-        <% errors.forEach(error => { %>
-            <li><%= error %></li>
-        <% }) %>
-    </ul>
-<% } %>
 
 <%- include('partials/footer') %>
