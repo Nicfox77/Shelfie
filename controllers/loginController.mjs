@@ -70,7 +70,12 @@ export const logout = (req, res) => {
             console.error(err);
             return res.redirect('/');
         }
-        res.redirect('/');
+        req.session.destroy((err) => {
+            if (err) {
+                console.error('Failed to destroy session:', err);
+            }
+            res.redirect('/');
+        });
     });
 };
 
@@ -138,21 +143,23 @@ export const showNewPasswordForm = async (req, res) => {
 
     if (!token) {
         errors.push({ message: 'Invalid reset link' });
-        res.render('reset-password', { errors });
-    } else {
-        if (process.env.USE_REDIS === 'true') {
-            const { default: redisClient } = await import('../config/redis.mjs');
-            const tokenKey = `password-reset:${token}`;
-            const userId = await redisClient.get(tokenKey);
-            if (!userId) {
-                errors.push({ message: 'Invalid reset link' });
-                res.render('reset-password', { errors });
-            } else {
-                res.render('reset-password', { errors, token });
-            }
+        return res.render('reset-password', { errors });
+    }
+
+    if (process.env.USE_REDIS === 'true') {
+        const { default: redisClient } = await import('../config/redis.mjs');
+        const tokenKey = `password-reset:${token}`;
+        console.log(tokenKey);
+        const userId = await redisClient.get(tokenKey);
+        console.log(userId);
+        if (!userId) {
+            errors.push({ message: 'Invalid reset link' });
+            return res.render('reset-password', { errors });
         } else {
-            res.render('reset-password', { errors, token });
+            return res.render('reset-password', { errors, token });
         }
+    } else {
+        return res.render('reset-password', { errors, token });
     }
 };
 
@@ -161,19 +168,19 @@ export const setNewPassword = async (req, res) => {
     const errors = [];
 
     if (!token) {
-        errors.push({ message: 'Invalid reset link' });
+        errors.push('Invalid reset link');
     }
 
     if (!password || !password2) {
-        errors.push({ message: 'Please enter all fields' });
+        errors.push('Please enter all fields');
     }
 
     if (password !== password2) {
-        errors.push({ message: 'Passwords do not match' });
+        errors.push('Passwords do not match');
     }
 
     if (password.length < 8) {
-        errors.push({ message: 'Password must be at least 8 characters' });
+        errors.push('Password must be at least 8 characters');
     }
 
     if (errors.length > 0) {
@@ -183,8 +190,9 @@ export const setNewPassword = async (req, res) => {
             const { default: redisClient } = await import('../config/redis.mjs');
             const tokenKey = `password-reset:${token}`;
             const userId = await redisClient.get(tokenKey);
+            console.log("setNewPassword -> userId", userId)
             if (!userId) {
-                errors.push({ message: 'Invalid reset link' });
+                errors.push('Invalid reset link');
                 res.render('reset-password', { errors, token });
             } else {
                 try {
@@ -196,7 +204,7 @@ export const setNewPassword = async (req, res) => {
                     res.redirect('/login');
                 } catch (err) {
                     console.error(err);
-                    res.redirect('/reset-password');
+                    res.redirect('/reset-password?token=' + token);
                 }
             }
         } else {

@@ -6,6 +6,7 @@ import flash from 'connect-flash';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import sessionStore from './config/sessionStore.mjs'; // Import session store
 
 // Load environment variables
 dotenv.config();
@@ -24,32 +25,12 @@ initializePassport(passport);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Configure session store
-let sessionStore;
-if (process.env.USE_REDIS === 'true') {
-    console.log('Using Redis for session store');
-    const { createClient } = await import('redis');
-    const { RedisStore } = await import('connect-redis');
-
-    const redisClient = createClient({
-        url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-    });
-
-    await redisClient.connect().catch(console.error);
-
-    sessionStore = new RedisStore({
-        client: redisClient,
-        prefix: 'sess:',
-    });
-} else {
-    sessionStore = new session.MemoryStore();
-}
-
+// Use the imported session store
 app.use(session({
     store: sessionStore,
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 
 app.use(passport.initialize());
