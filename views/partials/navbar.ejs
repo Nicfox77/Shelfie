@@ -13,25 +13,26 @@
 
 </div>
 
-<div class="searchLoginContainer">
-    <form class="searchForm me-3" action="/Explore" method="get">
-        <input name="search" type="text" placeholder="Search Book..." class="searchText">
-        <button type="submit" hidden >Search</button>
-    </form>
+<div class="d-flex justify-content-between">
+    <div class="searchLoginContainer">
+        <form class="searchForm me-3" action="/Explore" method="get">
+            <input name="search" type="text" placeholder="Search Book..." class="searchText">
+            <button type="submit" hidden >Search</button>
+        </form>
+    </div>
+    
+    <div class="login-container">
+        <% if (user) { %>
+            <p>Welcome, <%- user.username%> </p>
+            <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+            <div class="divider"></div>
+            <a href="/logout">Logout</a>
+        <% } else { %>
+            <img src="/imgs/icons/accountIcon.svg" alt="shelfiIcon">
+            <div class="divider"></div>
+            <a href="/login">Sign In</a>
+        <% } %>
+    </div>
 </div>
-
-<div class="login-container">
-    <% if (user) { %>
-        <p>Welcome, <%- user.username%> </p>
-        <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
-        <div class="divider"></div>
-        <a href="/logout">Logout</a>
-    <% } else { %>
-        <img src="/imgs/icons/accountIcon.svg" alt="shelfiIcon">
-        <div class="divider"></div>
-        <a href="/login">Sign In</a>
-    <% } %>
-</div>
-
 
 </nav>
