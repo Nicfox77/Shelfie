@@ -16,37 +16,35 @@ export const searchBooks = async (search) => {
         let params = [`%${search}%`];
         let [rows] = await conn.query(sql, params);
         if (rows.length > 0) {
-        // Convert rating
-        for (let row of rows) {
-            let rating = Number(row.rating); 
-            if (rating % 1 === 0) {
-                row.rating = rating.toFixed(0);  // Remove decimals
-            } else {
-                row.rating = rating.toFixed(1);  // Keep one decimal
+            // Convert rating
+            for (let row of rows) {
+                let rating = Number(row.rating); 
+                if (rating % 1 === 0) {
+                    row.rating = rating.toFixed(0);  // Remove decimals
+                } else {
+                    row.rating = rating.toFixed(1);  // Keep one decimal
+                }
             }
-        }
-        // Match MySql results to API format and return results
-        return rows.map((row) => ({
-            source: 'mysql',
-            isbn: row.isbn,
-            title: row.title,
-            authors: [row.author],
-            averageRating: row.rating,
-            categories: [row.genre],
-            image: row.image,
-        })); 
+            // Match MySql results to API format and return results
+            return rows.map((row) => ({
+                source: 'mysql',
+                isbn: row.isbn,
+                title: row.title,
+                authors: [row.author],
+                averageRating: row.rating,
+                categories: [row.genre],
+                image: row.image,
+            })); 
         }
 
-        try
-        {
+        try {
         const response = await fetch(url);
         const data = await response.json();
 
         if (!data.items) return [];
 
         // Filter out items that do not meet the criteria
-        let filteredBooks = data.items.filter((item) =>
-        {
+        let filteredBooks = data.items.filter((item) => {
             const info = item.volumeInfo;
             const hasRequiredFields = info.title && info.authors && info.averageRating && info.categories;
             const hasValidIsbn = item.volumeInfo.industryIdentifiers && 
@@ -135,6 +133,19 @@ export const searchBooks = async (search) => {
     }
     
 };
+
+export const checkShelf = async (isbn, user_id) => {
+    const conn = await pool.getConnection();
+    try {
+        let sql = `SELECT * FROM UserBooks
+                   WHERE isbn = ? AND user_id = ?`;
+        let params = [isbn, user_id];
+        let [rows] = await conn.query(sql, params);
+        return rows.length > 0;
+    } finally {
+        conn.release();
+    }
+}
 
 export const selectSearch = async () => {
     

@@ -4,8 +4,27 @@
     <h2 class="bookInfoTitle mt-5">Your Next Chapter Starts Here</h2>
 
     <div class="row mx-auto my-5">
-        <div class="col-12 col-md-6 d-flex justify-content-center align-items-top">
-            <img src="<%= book.image %>" alt="Book Cover" class="bookViewImg img-fluid">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-top">
+            <!-- Display book cover image-->
+            <div id="imageDiv" class="d-flex justify-content-center align-items-top">
+                <img src="<%= book.image %>" alt="Book Cover" class="bookViewImg">
+            </div>
+            
+            <!-- Display button to add book -->
+            <div class="addBookBtn d-flex justify-content-center">
+                <% if (!user) { %>
+                    <a href="/login" class="addBook">Add to Shelf</a>
+                <% } else if (inShelf) { %>
+                    <a href="/shelf" class="addBook">In Shelf</a>
+                <% } else { %>
+                    <form method="POST" action="/shelf/new">
+                        <input type="hidden" name="user_id" value="<%= user.user_id %>">
+                        <input type="hidden" name="isbn" value="<%= book.isbn %>">
+                        <input type="hidden" name="status" value="To Read">
+                        <button type="submit" class="addBook">Add to Shelf</button>
+                    </form>
+                <% } %>
+            </div>
         </div>
     
         <div class="col-12 col-md-6 d-flex mt-4">

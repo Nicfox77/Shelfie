@@ -295,6 +295,23 @@ input[type="text"] {
     width: 70%;
 }
 
+#imageDiv{
+    margin-bottom: -12%;
+}
+
+.addBook{
+    font-size: 22px;
+    display: inline-block;
+    background-color: #000;
+    color: white;
+    text-align: center;
+    width: 250px;
+    padding: 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+}
+
 /********** END OF BOOKVIEW PAGE **********/
 
 
