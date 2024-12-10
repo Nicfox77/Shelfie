@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="signContainer">
+    <div class="formContainer">
+        <img src="/imgs/icons/accountIcon.svg" alt="User Icon" class="formIcon">
+        <h1>Your Profile</h1>
+        <form id="profileForm" class="formStyle">
+            <div>
+                <label for="firstname">First Name:</label>
+                <% if (editMode) { %>
+                    <input type="text" id="firstname" name="firstname" value="<%= user.firstName %>">
+                <% } else { %>
+                    <p><%= user.firstName %></p>
+                <% } %>
+            </div>
+            <div>
+                <label for="lastname">Last Name:</label>
+                <% if (editMode) { %>
+                    <input type="text" id="lastname" name="lastname" value="<%= user.lastName %>">
+                <% } else { %>
+                    <p><%= user.lastName %></p>
+                <% } %>
+            </div>
+            <div>
+                <label for="username">Username:</label>
+                <% if (editMode) { %>
+                    <input type="text" id="username" name="username" value="<%= user.username %>">
+                <% } else { %>
+                    <p><%= user.username %></p>
+                <% } %>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <% if (editMode) { %>
+                    <input type="email" id="email" name="email" value="<%= user.email %>">
+                <% } else { %>
+                    <p><%= user.email %></p>
+                <% } %>
+            </div>
+            <% if (editMode) { %>
+                <button type="button" onclick="saveProfile()">Save</button>
+            <% } %>
+        </form>
+        <button onclick="toggleEditMode()"><%= editMode ? 'Cancel' : 'Modify' %></button>
+    </div>
+</div>
+
+<!-- Confirmation Code Modal -->
+<div id="confirmationCodeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('confirmationCodeModal')">&times;</span>
+        <p>Enter the confirmation code sent to your new email:</p>
+        <input type="text" id="confirmationCodeInput">
+        <button onclick="submitConfirmationCode()">Submit</button>
+    </div>
+</div>
+
+<!-- Password Modal -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('passwordModal')">&times;</span>
+        <p>Enter your current password:</p>
+        <input type="password" id="passwordInput">
+        <button onclick="submitPassword()">Submit</button>
+    </div>
+</div>
+
+
+<script>let currentEmail = '<%= user.email %>';
+        console.log(currentEmail);
+</script>
+<script src="/js/profile.js"></script>
+
+<%- include('partials/footer') %>

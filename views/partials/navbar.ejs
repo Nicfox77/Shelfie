@@ -23,8 +23,12 @@
     
     <div class="login-container">
         <% if (user) { %>
-            <p>Welcome, <%- user.username%> </p>
-            <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+        <a href="/profile">
+            <div class="logo-wrapper">
+                <p>Welcome, <%- user.username%> </p>
+                <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+            </div>
+        </a>
             <div class="divider"></div>
             <a href="/logout">Logout</a>
         <% } else { %>
