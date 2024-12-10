@@ -36,8 +36,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use((req, res, next) => {
+app.use((req, res, next) =>
+{
     res.locals.user = req.user || null;
+    res.locals.isAdmin = req.user && req.user.user_type === 1;
     next();
 });
 
