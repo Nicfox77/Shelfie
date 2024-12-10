@@ -5,6 +5,12 @@
 
     <div class="row mx-auto my-5">
         <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-top">
+            <% if (user && user.user_type == 1) { %>
+                <a href="#" id="<%= book.isbn %>" class="editBook d-flex align-items-end mb-2">
+                    <img src="/imgs/icons/PencilLine.svg" alt="Edit Book Icon" class="me-2">   
+                    <p>Edit Book</p>
+                </a>
+            <% } %>
             <!-- Display book cover image-->
             <div id="imageDiv" class="d-flex justify-content-center align-items-top">
                 <img src="<%= book.image %>" alt="Book Cover" class="bookViewImg">
@@ -15,7 +21,7 @@
                 <% if (!user) { %>
                     <a href="/login" class="addBook">Add to Shelf</a>
                 <% } else if (inShelf) { %>
-                    <a href="/shelf" class="addBook">In Shelf</a>
+                    <a href="/Shelf" class="addBook">In Shelf</a>
                 <% } else { %>
                     <form method="POST" action="/shelf/new">
                         <input type="hidden" name="user_id" value="<%= user.user_id %>">
@@ -77,6 +83,27 @@
         </div>
     </div>
 
+     
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="editBookModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content modalBg">
+        <div class="modal-header d-flex justify-content-center mx-auto">
+        <h1 class="modal-title fs-2 text-center" id="exampleModalLabel">Edit/Delete Book</h1>
+        </div>
+        <div class="modal-body">
+            <div id="editBook" class="text-center"></div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script src="/js/script.js"></script>
 <%- include('partials/footer') %>
 </body>
 </html>

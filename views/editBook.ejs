@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+    <form class="editBookForm">
+        <h1>Edit Book</h1>
+        <input type="hidden">
+        <input type="text" name="title" value="<%= book.title %>" class="mb-4" placeholder="Title" required>
+        <input type="text" name="author" value="<%= book.author %>" class="mb-4" placeholder="Author" required>
+        <textarea type="text" name="description" class="mb-4" placeholder="Description"><%=book.description%></textarea>
+        <input type="number" name="rating" value="<%= book.rating %>" min="1" max="5" class="mb-4" placeholder="Rating" required>
+        <input type="text" name="genre" value="<%= book.genre %>" class="mb-4" placeholder="Genre" required>
+        <input type="text" name="image" value="<%= book.image %>" class="mb-4" placeholder="Image Url" required>
+
+        <div class="editBookBtns d-flex flex-column">
+            <button>Confirm</button>
+        </div>
+    </form>
+
+
+<%- include('partials/footer') %>
+</body>
+</html>
