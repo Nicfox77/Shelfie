@@ -574,6 +574,14 @@ input[type="text"] {
     border-radius: 15px;
 }
 
+.adminButton{
+    display: flex;
+    justify-content: space-between;
+    background-color: #D8DBBD;
+    gap: 20px;
+    padding: 10px;
+}
+
 
 /********** END OF ADMIN PAGE **********/
 >>>>>>> a33deeb (added style to the admin page)
