@@ -10,7 +10,7 @@ export const showLoginForm = (req, res) => {
 
 export const login = (req, res, next) => {
     passport.authenticate('local', {
-        successRedirect: '/',
+        successRedirect: '/explore',
         failureRedirect: '/login',
         failureFlash: true
     })(req, res, next);
