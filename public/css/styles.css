@@ -462,6 +462,40 @@ input[type="text"] {
 /********** END OF SIGN UP / LOGIN FORM **********/
 
 
+
+
+/********** ADMIN PAGE **********/
+
+.adminPanel{
+    display: flex;
+    justify-content: space-around;
+    padding: 5%;
+}
+
+.panelItem{
+    width: 409px;
+    height: 142px;
+    text-align: center;
+    font-size: 48px;
+    background-color: #D8DBBD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.adminButton{
+    display: flex;
+    justify-content: space-between;
+    background-color: #D8DBBD;
+    gap: 20px;
+    padding: 10px;
+}
+
+
+/********** END OF ADMIN PAGE **********/
+
+
 /********** EDITBOOK PAGE **********/
 .editBookModal {
     background-color: #D8DBBD;
