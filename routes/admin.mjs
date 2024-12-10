@@ -34,7 +34,7 @@ router.post('/admin/addbook', ensureAdmin, async (req, res) =>
     try
     {
         conn = await pool.getConnection();
-        let sql = `INSERT INTO Books (isbn, title, author, description, publisher, published_date, page_count, rating, genre, image) 
+        let sql = `INSERT INTO Books (isbn, title, author, genre, description, publisher, page_count, published_date, rating, image) 
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         await conn.query(sql,params);
 
