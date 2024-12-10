@@ -11,12 +11,12 @@ router.get('/admin', ensureAdmin, async (req, res) =>
 
 router.get('/admin/addbook', ensureAdmin, async (req, res) =>
 {
-    res.render('admin');
+    res.send('admin add book');
 });
 
 router.get('/admin/searchuser', ensureAdmin, async (req, res) =>
 {
-    res.render('admin');
+    res.send('admin add user');
 });
 
 export default router;
