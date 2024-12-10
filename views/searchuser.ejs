@@ -1,0 +1,75 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+        <div class="signContainer">
+            <div class="formContainer">
+                <!-- Search Form -->
+                <img src="/imgs/icons/accountIcon.svg" alt="User Icon" class="formIcon">
+                <h1>Search User</h1>
+                <form action="/admin/searchuser" method="POST" class="formStyle">
+                    <input type="text" name="userName" placeholder="Search for a Username" required>
+                    <div class="adminButton">
+                        <button type="submit" class="confirmButton">Search</button>
+                    </div>
+                </form>
+
+                <!-- Message Display -->
+                <% if (locals.message) { %>
+                    <div class="message <%= message.type %>">
+                        <%= message.text %>
+                    </div>
+                    <% } %>
+
+                        <!-- Edit Form - Show only when user is found -->
+                        <% if (locals.user) { %>
+                            <h2>Edit User</h2>
+                            <form action="/admin/edituser" method="POST" class="formStyle">
+                                <input type="hidden" name="userId" value="<%= user.user_id %>">
+
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>"
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName" value="<%= user.lastName %>"
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" name="username" value="<%= user.username %>"
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="bio">Bio</label>
+                                    <textarea id="bio" name="bio" rows="3"><%= user.bio %></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="userType">User Type</label>
+                                    <select id="userType" name="userType" required>
+                                        <option value="0" <%= user.user_type === 2 ? 'selected' : '' %>>User</option>
+                                        <option value="1" <%= user.user_type === 1 ? 'selected' : '' %>>Admin</option>
+                                    </select>
+                                </div>
+
+                                <div class="adminButton">
+                                    <button type="submit" class="confirmButton">Update User</button>
+                                </div>
+                            </form>
+                            <% } %>
+
+                                <div class="formFooter"></div>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>
