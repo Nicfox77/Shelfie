@@ -120,7 +120,7 @@ export const searchBooks = async (search, category) => {
                     image: thumbnail,
                     description: info.description.replace(/[^\x00-\x7F]/g, ''),
                     publisher: info.publisher,
-                    published_date: formattedPublishedDate,
+                    publishedDate: formattedPublishedDate,
                     page_count: info.pageCount,
                 });
             }
@@ -142,7 +142,7 @@ export const searchBooks = async (search, category) => {
                                 rating = VALUES(rating),
                                 image = VALUES(image)`;
                 let insertParams = [book.isbn, book.title, book.authors, book.categories, book.description, book.publisher, 
-                                    book.page_count, book.published_date, book.averageRating, book.image];
+                                    book.page_count, book.publishedDate, book.averageRating, book.image];
                 await conn.query(insertSql, insertParams);
             }
         }
