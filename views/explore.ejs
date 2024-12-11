@@ -20,6 +20,15 @@
         </form>
     </div>
     
+    <div class="sortSelect mt-3">
+        <select id="sort" class="form-select">
+            <option value="">Select One</option>
+            <option value="rating">Rating (High to Low)</option>
+            <option value="newest">Newest to Oldest</option>
+            <option value="alphabetical">Alphabetical (A-Z)</option>
+        </select>
+    </div>
+
     <!-- Display books results from search -->
     <div id="bookResults" class="row mx-auto mt-4">
         <% if (books && books.length > 0) { %>
@@ -61,5 +70,7 @@
     </div>
     
     <%- include('partials/footer') %>
+    
+<script src="/js/script.js"></script>
 </body>
 </html>
