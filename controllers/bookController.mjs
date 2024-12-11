@@ -5,15 +5,42 @@ import pool from '../config/db.mjs';
 // Function to search for books using API
 export const searchBooks = async (search, category) => {
     const apiKey = process.env.API_KEY;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
+    // Set API search category
+    let queryCategory;
+    if (category === "title") {
+        queryCategory = "intitle";
+    } else if (category === "author") {
+        queryCategory = "inauthor";
+    } else  if (category === "genre") {
+        queryCategory = "subject";
+    }
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${queryCategory}:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
     
     const conn = await pool.getConnection();
     try {
-        let sql = `SELECT isbn, title, author, genre, rating, image
-        FROM Books
-        WHERE title LIKE ?
-        ORDER BY rating DESC`;
-        let params = [`%${search}%`];
+        let sql, params;
+
+        if (category === "title") {
+            sql = `SELECT isbn, title, author, genre, rating, image
+                   FROM Books
+                   WHERE title LIKE ?
+                   ORDER BY rating DESC`;
+            params = [`%${search}%`];
+        } else if (category === "author") {
+            sql = `SELECT isbn, title, author, genre, rating, image
+                   FROM Books
+                   WHERE author LIKE ?
+                   ORDER BY rating DESC`;
+            params = [`%${search}%`];
+        } else if (category === "genre") {
+            sql = `SELECT isbn, title, author, genre, rating, image
+                   FROM Books
+                   WHERE genre LIKE ?
+                   ORDER BY rating DESC`;
+            params = [`%${search}%`];
+        }
+        
+        
         let [rows] = await conn.query(sql, params);
         if (rows.length > 0) {
             // Convert rating
@@ -93,7 +120,7 @@ export const searchBooks = async (search, category) => {
                     averageRating: info.averageRating,
                     categories: info.categories.join(", ").replace(/[^\x00-\x7F]/g, ''),
                     image: thumbnail,
-                    description: info.description,
+                    description: info.description.replace(/[^\x00-\x7F]/g, ''),
                     publisher: info.publisher,
                     published_date: formattedPublishedDate,
                     page_count: info.pageCount,
