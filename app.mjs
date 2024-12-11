@@ -23,7 +23,7 @@ initializePassport(passport);
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Use the imported session store
 app.use(session({

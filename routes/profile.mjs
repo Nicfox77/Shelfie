@@ -20,39 +20,50 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { first_name, last_name, username, email, password, confirmationCode } = req.body;
+    const { firstname, lastname, username, email, password, confirmationCode } = req.body;
+    console.log(req.body);
     const userId = req.user.user_id;
 
     try {
-        // Check if the email has changed
+        console.log('checking password');
+        // grab data from the database
         let sql = `SELECT email, password_hash FROM Users WHERE user_id = ?`;
         let [rows] = await pool.query(sql, [userId]);
         const currentEmail = rows[0].email;
         const currentPasswordHash = rows[0].password_hash;
 
+        // Check if the password is correct
+        const isMatch = await bcrypt.compare(password, currentPasswordHash);
+
+        if (!isMatch) {
+            return res.status(400).send({ message: 'Incorrect password' });
+        }
+        console.log('Password is correct');
+
+        // Check if the email has changed
         if (email !== currentEmail) {
             // Email has changed, verify confirmation code
+            console.log('email has changed');
             if (req.session.confirmationCode === confirmationCode) {
+                console.log('confirmation code is correct');
                 sql = `UPDATE Users SET firstName = ?, lastName = ?, username = ?, email = ? WHERE user_id = ?`;
-                await pool.query(sql, [first_name, last_name, username, email, userId]);
-                res.redirect('/profile');
+                await pool.query(sql, [firstname, lastname, username, email, userId]);
+                return res.redirect('/profile');
             } else {
-                res.status(400).send({ message: 'Invalid confirmation code' });
+                return res.status(400).send({ message: 'Invalid confirmation code' });
             }
         } else {
-            // Email has not changed, verify current password
-            const isMatch = await bcrypt.compare(password, currentPasswordHash);
-            if (isMatch) {
-                sql = `UPDATE Users SET firstName = ?, lastName = ?, username = ? WHERE user_id = ?`;
-                await pool.query(sql, [first_name, last_name, username, userId]);
-                res.redirect('/profile');
-            } else {
-                res.status(400).send({ message: 'Incorrect password' });
-            }
+            console.log('email has not changed');
         }
+
+        // Email has not changed, just set other fields
+        sql = `UPDATE Users SET firstName = ?, lastName = ?, username = ? WHERE user_id = ?`;
+        await pool.query(sql, [firstname, lastname, username, userId]);
+        return res.redirect('/profile');
+
     } catch (err) {
         console.error(err);
-        res.redirect('/');
+        return res.redirect('/');
     }
 });
 

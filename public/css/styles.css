@@ -671,3 +671,15 @@ input[type="text"] {
 }
 
 /********** END OF ADMIN PAGE **********/
+
+/********** PROFILE PAGE **********/
+.editable {
+    background-color: #f0f0f0 !important;
+    border-radius: 5px !important;
+}
+
+.editable:hover {
+    cursor: pointer;
+}
+
+/********** END OF PROFILE PAGE **********/

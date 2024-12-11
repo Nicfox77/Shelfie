@@ -8,64 +8,67 @@
         <form id="profileForm" class="formStyle">
             <div>
                 <label for="firstname">First Name:</label>
-                <% if (editMode) { %>
-                    <input type="text" id="firstname" name="firstname" value="<%= user.firstName %>">
-                <% } else { %>
-                    <p><%= user.firstName %></p>
-                <% } %>
+                <input type="text" id="firstname" name="firstname" value="<%= user.firstName %>" <%= editMode ? '' : 'disabled' %>>
             </div>
             <div>
                 <label for="lastname">Last Name:</label>
-                <% if (editMode) { %>
-                    <input type="text" id="lastname" name="lastname" value="<%= user.lastName %>">
-                <% } else { %>
-                    <p><%= user.lastName %></p>
-                <% } %>
+                <input type="text" id="lastname" name="lastname" value="<%= user.lastName %>" <%= editMode ? '' : 'disabled' %>>
             </div>
             <div>
                 <label for="username">Username:</label>
-                <% if (editMode) { %>
-                    <input type="text" id="username" name="username" value="<%= user.username %>">
-                <% } else { %>
-                    <p><%= user.username %></p>
-                <% } %>
+                <input type="text" id="username" name="username" value="<%= user.username %>" <%= editMode ? '' : 'disabled' %>>
             </div>
             <div>
                 <label for="email">Email:</label>
-                <% if (editMode) { %>
-                    <input type="email" id="email" name="email" value="<%= user.email %>">
-                <% } else { %>
-                    <p><%= user.email %></p>
-                <% } %>
+                <input type="email" id="email" name="email" value="<%= user.email %>" <%= editMode ? '' : 'disabled' %>>
             </div>
-            <% if (editMode) { %>
-                <button type="button" onclick="saveProfile()">Save</button>
-            <% } %>
+            <button type="button" id="saveButton" onclick="saveProfile()" style="display: <%= editMode ? 'block' : 'none' %>;">Save</button>
         </form>
-        <button onclick="toggleEditMode()"><%= editMode ? 'Cancel' : 'Modify' %></button>
+        <button type="button" onclick="toggleEditMode()"><%= editMode ? 'Cancel' : 'Modify' %></button>
     </div>
 </div>
 
 <!-- Confirmation Code Modal -->
-<div id="confirmationCodeModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('confirmationCodeModal')">&times;</span>
-        <p>Enter the confirmation code sent to your new email:</p>
-        <input type="text" id="confirmationCodeInput">
-        <button onclick="submitConfirmationCode()">Submit</button>
+<div class="modal fade" id="confirmationCodeModal" tabindex="-1" aria-labelledby="confirmationCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modalBg">
+            <div class="modal-header d-flex justify-content-center mx-auto">
+                <h1 class="modal-title fs-2 text-center" id="confirmationCodeModalLabel">Enter Confirmation Code</h1>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <input type="text" id="confirmationCodeInput" class="form-control" placeholder="Confirmation Code">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitConfirmationCode()">Submit</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Password Modal -->
-<div id="passwordModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('passwordModal')">&times;</span>
-        <p>Enter your current password:</p>
-        <input type="password" id="passwordInput">
-        <button onclick="submitPassword()">Submit</button>
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modalBg">
+            <div class="modal-header d-flex justify-content-center mx-auto">
+                <h1 class="modal-title fs-2 text-center" id="passwordModalLabel">Enter Your Current Password</h1>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    <div class="text-center">
+                        <input type="password" id="passwordInput" class="form-control" placeholder="Current Password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitPassword()">Submit</button>
+            </div>
+        </div>
     </div>
 </div>
-
 
 <script>let currentEmail = '<%= user.email %>';
         console.log(currentEmail);
