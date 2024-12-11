@@ -21,22 +21,19 @@ export const searchBooks = async (search, category) => {
         let sql, params;
 
         if (category === "title") {
-            sql = `SELECT isbn, title, author, genre, rating, image
+            sql = `SELECT isbn, title, author, genre, rating, image, published_date
                    FROM Books
-                   WHERE title LIKE ?
-                   ORDER BY rating DESC`;
+                   WHERE title LIKE ?`;
             params = [`%${search}%`];
         } else if (category === "author") {
-            sql = `SELECT isbn, title, author, genre, rating, image
+            sql = `SELECT isbn, title, author, genre, rating, image, published_date
                    FROM Books
-                   WHERE author LIKE ?
-                   ORDER BY rating DESC`;
+                   WHERE author LIKE ?`;
             params = [`%${search}%`];
         } else if (category === "genre") {
-            sql = `SELECT isbn, title, author, genre, rating, image
+            sql = `SELECT isbn, title, author, genre, rating, image, published_date
                    FROM Books
-                   WHERE genre LIKE ?
-                   ORDER BY rating DESC`;
+                   WHERE genre LIKE ?`;
             params = [`%${search}%`];
         }
         
@@ -61,6 +58,7 @@ export const searchBooks = async (search, category) => {
                 averageRating: row.rating,
                 categories: [row.genre],
                 image: row.image,
+                publishedDate: row.published_date,
             })); 
         }
 

@@ -215,6 +215,11 @@ input[type="text"] {
     align-items: center;
 }
 
+#sort{
+    width: 15%;
+    margin-right: 4.25%;
+}
+
 .searchBtn{
     width: 240px;
     height: 64px;
