@@ -10,6 +10,9 @@
     <a href="/Explore">Explore</a>
     <a href="/Shelf">Shelf</a>
     <a href="/About">About</a>
+    <% if (user.user_type===1) { %>
+        <a href="/admin">Admin</a>
+        <% } %>
 
 </div>
 
@@ -25,7 +28,7 @@
         <% if (user) { %>
         <a href="/profile">
             <div class="logo-wrapper">
-                <p>Welcome, <%- user.username%> </p>
+                <p>Welcome, <%- user.firstName%> </p>
                 <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
             </div>
         </a>
