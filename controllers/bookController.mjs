@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import pool from '../config/db.mjs';
 
 // Function to search for books using API
-export const searchBooks = async (search) => {
+export const searchBooks = async (search, category) => {
     const apiKey = process.env.API_KEY;
     const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
     
