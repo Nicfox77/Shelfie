@@ -20,45 +20,46 @@
                     </div>
                     <% } %>
 
-                        <!-- Edit Form - Show only when user is found -->
-                        <% if (locals.user) { %>
+                        <!-- Edit Form - Show only when searchedUser is found -->
+                        <% if (locals.searchedUser) { %>
                             <h2>Edit User</h2>
                             <form action="/admin/edituser" method="POST" class="formStyle">
-                                <input type="hidden" name="userId" value="<%= user.user_id %>">
+                                <input type="hidden" name="userId" value="<%= searchedUser.user_id %>">
 
                                 <div class="form-group">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>"
-                                        required>
+                                    <input type="text" id="firstName" name="firstName"
+                                        value="<%= searchedUser.firstName %>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="lastName">Last Name</label>
-                                    <input type="text" id="lastName" name="lastName" value="<%= user.lastName %>"
-                                        required>
+                                    <input type="text" id="lastName" name="lastName"
+                                        value="<%= searchedUser.lastName %>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input type="text" id="username" name="username" value="<%= user.username %>"
-                                        required>
+                                    <input type="text" id="username" name="username"
+                                        value="<%= searchedUser.username %>" required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" id="email" name="email" value="<%= user.email %>" required>
+                                    <input type="email" id="email" name="email" value="<%= searchedUser.email %>"
+                                        required>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="bio">Bio</label>
-                                    <textarea id="bio" name="bio" rows="3"><%= user.bio %></textarea>
+                                    <textarea id="bio" name="bio" rows="3"><%= searchedUser.bio %></textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="userType">User Type</label>
                                     <select id="userType" name="userType" required>
-                                        <option value="0" <%= user.user_type === 2 ? 'selected' : '' %>>User</option>
-                                        <option value="1" <%= user.user_type === 1 ? 'selected' : '' %>>Admin</option>
+                                        <option value="2" <%=searchedUser.user_type===2 ? 'selected' : '' %>>User</option>
+                                        <option value="1" <%=searchedUser.user_type===1 ? 'selected' : '' %>>Admin</option>
                                     </select>
                                 </div>
 
@@ -72,4 +73,4 @@
             </div>
         </div>
 
-        <%- include('partials/footer') %>
+<%- include('partials/footer') %>

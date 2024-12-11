@@ -52,8 +52,9 @@ router.post('/admin/addbook', ensureAdmin, async (req, res) =>
 router.get('/admin/searchuser', ensureAdmin, (req, res) =>
 {
     res.render('searchuser', {
-        user: null,
-        message: null
+        searchedUser: null,  // Renamed from user to searchedUser
+        message: null,
+        user: req.user  // Pass the logged-in user separately
     });
 });
 
@@ -76,22 +77,25 @@ router.post('/admin/searchuser', ensureAdmin, async (req, res) =>
         if (rows.length > 0)
         {
             res.render('searchuser', {
-                user: rows[0],
-                message: { type: 'success', text: 'User found' }
+                searchedUser: rows[0],  // Use searchedUser for the found user
+                message: { type: 'success', text: 'User found' },
+                user: req.user  // Keep the logged-in user's info
             });
         } else
         {
             res.render('searchuser', {
-                user: null,
-                message: { type: 'error', text: 'User not found' }
+                searchedUser: null,
+                message: { type: 'error', text: 'User not found' },
+                user: req.user
             });
         }
     } catch (error)
     {
         console.error('Error searching user:', error);
         res.render('searchuser', {
-            user: null,
-            message: { type: 'error', text: 'Error searching for user' }
+            searchedUser: null,
+            message: { type: 'error', text: 'Error searching for user' },
+            user: req.user
         });
     } finally
     {
@@ -108,22 +112,24 @@ router.post('/admin/edituser', ensureAdmin, async (req, res) =>
         const { userId, username, email, bio, userType, firstName, lastName } = req.body;
 
         // Convert userType string to integer
-        const userTypeValue = userType === 'admin' ? 1 : 2; 
+        // If userType is 'admin', set to 1, if 'user' set to 2
+        const userTypeValue = userType === '1' ? 1 : 2;  // Changed from 'admin' to '1'
 
         const sql = `UPDATE Users SET username = ?, email = ?, bio = ?, user_type = ?, firstName = ?, lastName = ? WHERE user_id = ?`;
-
         await conn.query(sql, [username, email, bio, userTypeValue, firstName, lastName, userId]);
 
         res.render('searchuser', {
-            user: null,
-            message: { type: 'success', text: 'User updated successfully' }
+            searchedUser: null,
+            message: { type: 'success', text: 'User updated successfully' },
+            user: req.user
         });
     } catch (error)
     {
         console.error('Error updating user:', error);
         res.render('searchuser', {
-            user: null,
-            message: { type: 'error', text: 'Error updating user' }
+            searchedUser: null,
+            message: { type: 'error', text: 'Error updating user' },
+            user: req.user
         });
     } finally
     {
