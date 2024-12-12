@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="bookshelfContainer">
+    <h1>Your Personal Reading Journey, Organized.</h1>
+
+    <div class="shelf">
+        <h2>In Progress</h2>
+        <div class="books">
+            <% if (readBooks) { %>
+                <% readBooks.forEach(book => { %>
+                    <div class="book">
+                        <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+                        <h3><%= book.title %></h3>
+                        <p>by <%= book.author %></p>
+                        <% if (book.onShelf) { %>
+                            <button class="remove-from-shelf" id="<%= book.isbn %>">Remove from Shelf</button>
+                        <% } else { %>
+                            <button class="add-to-shelf" id="<%= book.isbn %>">Add to Shelf</button>
+                        <% } %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No books found.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="shelf">
+        <h2>Unread</h2>
+        <div class="books">
+            <% if (unreadBooks) { %>
+                <% unreadBooks.forEach(book => { %>
+                    <div class="book">
+                        <img src="<%= book.coverImage %>" alt="<%= book.title %>">
+                        <h3><%= book.title %></h3>
+                        <p>by <%= book.author %></p>
+                        <% if (book.onShelf) { %>
+                            <button class="remove-from-shelf" id="<%= book.isbn %>">Remove from Shelf</button>
+                        <% } else { %>
+                            <button class="add-to-shelf" id="<%= book.isbn %>">Add to Shelf</button>
+                        <% } %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No books found.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script src="/js/script.js"></script>
+
+<%- include('partials/footer') %>

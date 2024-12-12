@@ -150,3 +150,31 @@ export const checkShelf = async (isbn, user_id) => {
 export const selectSearch = async () => {
     
 }
+
+export const getReadBooks = async (user_id) => {
+    const conn = await pool.getConnection();
+    try {
+      let sql = `SELECT * FROM Books
+                 INNER JOIN UserBooks ON Books.isbn = UserBooks.isbn
+                 WHERE UserBooks.user_id = ? AND UserBooks.status = 'Read'`;
+      let params = [user_id];
+      let [rows] = await conn.query(sql, params);
+      return rows;
+    } finally {
+      conn.release();
+    }
+  }
+  
+  export const getUnreadBooks = async (user_id) => {
+    const conn = await pool.getConnection();
+    try {
+      let sql = `SELECT * FROM Books
+                 INNER JOIN UserBooks ON Books.isbn = UserBooks.isbn
+                 WHERE UserBooks.user_id = ? AND UserBooks.status = 'To Read'`;
+      let params = [user_id];
+      let [rows] = await conn.query(sql, params);
+      return rows;
+    } finally {
+      conn.release();
+    }
+  }

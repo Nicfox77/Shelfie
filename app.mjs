@@ -23,7 +23,7 @@ initializePassport(passport);
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Use the imported session store
 app.use(session({
@@ -53,6 +53,7 @@ import bookRoutes from './routes/books.mjs';
 import loginRoutes from './routes/login.mjs';
 import indexRoutes from './routes/index.mjs';
 import dbTestRoutes from './routes/dbtest.mjs';
+import shelfRoutes from './routes/shelf.mjs';
 
 // Add the database test route
 app.use('/', dbTestRoutes);
@@ -62,5 +63,7 @@ app.use('/', indexRoutes);
 app.use('/', loginRoutes);
 // Explore page route
 app.use('/', bookRoutes);
+//Shelf page route 
+app.use('/', shelfRoutes);
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
