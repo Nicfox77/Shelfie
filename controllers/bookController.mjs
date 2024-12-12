@@ -111,7 +111,7 @@ export const searchBooks = async (search, category) => {
                     averageRating: info.averageRating,
                     categories: info.categories.join(", ").replace(/[^\x00-\x7F]/g, ''),
                     image: thumbnail,
-                    description: info.description.replace(/[^\x00-\x7F]/g, ''),
+                    description: info.description,
                     publisher: info.publisher,
                     publishedDate: formattedPublishedDate,
                     page_count: info.pageCount,
