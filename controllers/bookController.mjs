@@ -11,9 +11,8 @@ export const searchBooks = async (search, category) => {
         queryCategory = "intitle";
     } else if (category === "author") {
         queryCategory = "inauthor";
-    } else  if (category === "genre") {
-        queryCategory = "subject";
     }
+    
     const url = `https://www.googleapis.com/books/v1/volumes?q=${queryCategory}:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
     
     const conn = await pool.getConnection();
@@ -30,13 +29,7 @@ export const searchBooks = async (search, category) => {
                    FROM Books
                    WHERE author LIKE ?`;
             params = [`%${search}%`];
-        } else if (category === "genre") {
-            sql = `SELECT isbn, title, author, genre, rating, image, published_date
-                   FROM Books
-                   WHERE genre LIKE ?`;
-            params = [`%${search}%`];
-        }
-        
+        }  
         
         let [rows] = await conn.query(sql, params);
         if (rows.length > 0) {
