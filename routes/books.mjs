@@ -36,6 +36,22 @@ router.get('/Explore/bookView', async (req, res) => {
     }   
 });
 
+router.get('/Shelf', async (req, res) => {
+    if (!req.user) {
+      return res.status(401).send('Unauthorized');
+    }
+  
+    const userId = req.user.user_id;
+    try {
+      const readBooks = await bookController.getReadBooks(userId);
+      const unreadBooks = await bookController.getUnreadBooks(userId);
+      res.render('shelf', { readBooks, unreadBooks });
+    } catch (error) {
+      console.error("Error fetching shelf data:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
 // Add book to UserBooks Table
 router.post('/shelf/new', async (req, res) => {
     let conn;

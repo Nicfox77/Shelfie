@@ -53,7 +53,7 @@ import bookRoutes from './routes/books.mjs';
 import loginRoutes from './routes/login.mjs';
 import indexRoutes from './routes/index.mjs';
 import dbTestRoutes from './routes/dbtest.mjs';
-import shelfRoutes from './routes/shelf.mjs';
+//import shelfRoutes from './routes/Shelf.mjs';
 
 // Add the database test route
 app.use('/', dbTestRoutes);
@@ -63,7 +63,5 @@ app.use('/', indexRoutes);
 app.use('/', loginRoutes);
 // Explore page route
 app.use('/', bookRoutes);
-//Shelf page route 
-app.use('/', shelfRoutes);
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

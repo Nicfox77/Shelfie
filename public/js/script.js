@@ -1,6 +1,9 @@
 // Event Listeners
-document.querySelector(".editBook").addEventListener("click", editBook);
-
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector(".editBook").addEventListener("click", editBook);
+    document.querySelector(".add-to-shelf").addEventListener("click", addToShelf);
+    document.querySelector(".remove-from-shelf").addEventListener("click", removeFromShelf);
+});
 // Functions
 async function editBook() {
     var myModal = new bootstrap.Modal(document.getElementById('editBookModal'));
@@ -50,9 +53,6 @@ async function editBook() {
     });
 }
 
-// Event Listeners
-document.querySelector(".add-to-shelf").addEventListener("click", addToShelf);
-
 // Functions
 async function addToShelf() {
     let isbn = this.id;
@@ -69,9 +69,6 @@ async function addToShelf() {
         console.log("Error adding book to shelf:", error);
     }
 }
-
-// Event Listeners
-document.querySelector(".remove-from-shelf").addEventListener("click", removeFromShelf);
 
 // Functions
 async function removeFromShelf() {

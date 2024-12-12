@@ -2,12 +2,14 @@
 <%- include('partials/navbar') %>
 
 <div class="bookshelfContainer">
-    <h1>Your Personal Reading Journey, Organized.</h1>
+    <h2 class="mt-5">Your Personal Reading Journey, Organized.</h2>
 
     <div class="shelf">
-        <h2>In Progress</h2>
+        <p class="category px-2">In Progress</p>
         <div class="books">
-            <% if (readBooks) { %>
+            <% if (!readBooks.length) { %>
+                <p>No books found.</p>
+            <% } else { %>
                 <% readBooks.forEach(book => { %>
                     <div class="book">
                         <img src="<%= book.coverImage %>" alt="<%= book.title %>">
@@ -20,16 +22,16 @@
                         <% } %>
                     </div>
                 <% }) %>
-            <% } else { %>
-                <p>No books found.</p>
             <% } %>
         </div>
     </div>
 
     <div class="shelf">
-        <h2>Unread</h2>
+        <p class="category px-2">Unread</p>
         <div class="books">
-            <% if (unreadBooks) { %>
+            <% if (!unreadBooks.length) { %>
+                <p>No books found.</p>
+            <% } else { %>
                 <% unreadBooks.forEach(book => { %>
                     <div class="book">
                         <img src="<%= book.coverImage %>" alt="<%= book.title %>">
@@ -42,8 +44,6 @@
                         <% } %>
                     </div>
                 <% }) %>
-            <% } else { %>
-                <p>No books found.</p>
             <% } %>
         </div>
     </div>
@@ -52,3 +52,6 @@
 <script src="/js/script.js"></script>
 
 <%- include('partials/footer') %>
+
+</body>
+</html>
