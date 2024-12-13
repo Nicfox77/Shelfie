@@ -36,21 +36,60 @@ router.get('/Explore/bookView', async (req, res) => {
     }   
 });
 
+// books.mjs
 router.get('/Shelf', async (req, res) => {
     if (!req.user) {
       return res.status(401).send('Unauthorized');
     }
   
     const userId = req.user.user_id;
-    try {
-      const readBooks = await bookController.getReadBooks(userId);
-      const unreadBooks = await bookController.getUnreadBooks(userId);
-      res.render('shelf', { readBooks, unreadBooks });
-    } catch (error) {
-      console.error("Error fetching shelf data:", error);
-      res.status(500).send("Internal Server Error");
-    }
+    const readBooks = await bookController.getReadBooks(userId);
+    const unreadBooks = await bookController.getUnreadBooks(userId);
+    const userShelf = await bookController.getUserShelf(userId); // Fetch user's shelf
+
+    // Convert userShelf to a Set for faster lookup
+    const userShelfIsbns = new Set(userShelf.map(book => book.isbn));
+
+    res.render('shelf', { readBooks, unreadBooks, userShelfIsbns });
   });
+
+router.post('/remove/:isbn', (req, res) => {
+    const isbn = req.params.isbn;
+    const index = shelf.indexOf(isbn);
+    if (index > -1) {
+        shelf.splice(index, 1); // Remove the book
+        res.status(200).send(`Book with ISBN ${isbn} removed from shelf.`);
+    } else {
+        res.status(404).send(`Book with ISBN ${isbn} not found on shelf.`);
+    }
+});
+
+router.post('/shelf/remove/:isbn', async (req, res) => {
+    const isbn = req.params.isbn; // Get the ISBN from the URL
+    const userId = req.body.user_id; // Get the user ID from the form data
+
+    try {
+        await removeBookFromShelf(userId, isbn); // Await the removal function
+        res.redirect('/shelf'); // Redirect back to the shelf page after removal
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error removing book from shelf');
+    }
+});
+
+
+async function removeBookFromShelf(userId, isbn) {
+    const conn = await pool.getConnection(); // Await the connection
+    try {
+        const query = 'DELETE FROM shelves WHERE user_id = ? AND isbn = ?';
+        const [results] = await conn.query(query, [userId, isbn]); // Use await for the query
+        return results; // Return the results
+    } catch (error) {
+        throw error; // Throw the error to be caught in the route handler
+    } finally {
+        conn.release(); // Ensure the connection is released
+    }
+}
 
 // Add book to UserBooks Table
 router.post('/shelf/new', async (req, res) => {

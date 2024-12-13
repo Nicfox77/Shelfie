@@ -1,8 +1,6 @@
 // Event Listeners
 document.addEventListener("DOMContentLoaded", function() {
     document.querySelector(".editBook").addEventListener("click", editBook);
-    document.querySelector(".add-to-shelf").addEventListener("click", addToShelf);
-    document.querySelector(".remove-from-shelf").addEventListener("click", removeFromShelf);
 });
 // Functions
 async function editBook() {
@@ -51,38 +49,4 @@ async function editBook() {
             }
         }
     });
-}
-
-// Functions
-async function addToShelf() {
-    let isbn = this.id;
-    let url = `/shelf/add/${isbn}`;
-    try {
-        let response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // If book is successfully added to shelf, display alert
-        alert("Book added to shelf");
-    } catch (error) {
-        console.log("Error adding book to shelf:", error);
-    }
-}
-
-// Functions
-async function removeFromShelf() {
-    let isbn = this.id;
-    let url = `/shelf/remove/${isbn}`;
-    try {
-        let response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // If book is successfully removed from shelf, display alert
-        alert("Book removed from shelf");
-    } catch (error) {
-        console.log("Error removing book from shelf:", error);
-    }
 }
