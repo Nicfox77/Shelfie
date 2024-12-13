@@ -1,6 +1,7 @@
 // Event Listeners
-document.querySelector(".editBook").addEventListener("click", editBook);
-
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector(".editBook").addEventListener("click", editBook);
+});
 // Functions
 async function editBook() {
     var myModal = new bootstrap.Modal(document.getElementById('editBookModal'));
