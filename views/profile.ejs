@@ -1,0 +1,78 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="signContainer">
+    <div class="formContainer">
+        <img src="/imgs/icons/accountIcon.svg" alt="User Icon" class="formIcon">
+        <h1>Your Profile</h1>
+        <form id="profileForm" class="formStyle">
+            <div>
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" value="<%= user.firstName %>" <%= editMode ? '' : 'disabled' %>>
+            </div>
+            <div>
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" value="<%= user.lastName %>" <%= editMode ? '' : 'disabled' %>>
+            </div>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="<%= user.username %>" <%= editMode ? '' : 'disabled' %>>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" <%= editMode ? '' : 'disabled' %>>
+            </div>
+            <button type="button" id="saveButton" onclick="saveProfile()" style="display: <%= editMode ? 'block' : 'none' %>;">Save</button>
+        </form>
+        <button type="button" onclick="toggleEditMode()"><%= editMode ? 'Cancel' : 'Modify' %></button>
+    </div>
+</div>
+
+<!-- Confirmation Code Modal -->
+<div class="modal fade" id="confirmationCodeModal" tabindex="-1" aria-labelledby="confirmationCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modalBg">
+            <div class="modal-header d-flex justify-content-center mx-auto">
+                <h1 class="modal-title fs-2 text-center" id="confirmationCodeModalLabel">Enter Confirmation Code</h1>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <input type="text" id="confirmationCodeInput" class="form-control" placeholder="Confirmation Code">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitConfirmationCode()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Password Modal -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content modalBg">
+            <div class="modal-header d-flex justify-content-center mx-auto">
+                <h1 class="modal-title fs-2 text-center" id="passwordModalLabel">Enter Your Current Password</h1>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    <div class="text-center">
+                        <input type="password" id="passwordInput" class="form-control" placeholder="Current Password">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="submitPassword()">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>let currentEmail = '<%= user.email %>';
+        console.log(currentEmail);
+</script>
+<script src="/js/profile.js"></script>
+
+<%- include('partials/footer') %>

@@ -3,17 +3,34 @@ import dotenv from 'dotenv';
 import pool from '../config/db.mjs';
 
 // Function to search for books using API
-export const searchBooks = async (search) => {
+export const searchBooks = async (search, category) => {
     const apiKey = process.env.API_KEY;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=intitle:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
+    // Set API search category
+    let queryCategory;
+    if (category === "title") {
+        queryCategory = "intitle";
+    } else if (category === "author") {
+        queryCategory = "inauthor";
+    }
+    
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${queryCategory}:${search}&orderBy=relevance&key=${apiKey}&maxResults=40&filter=ebooks`;
     
     const conn = await pool.getConnection();
     try {
-        let sql = `SELECT isbn, title, author, genre, rating, image
-        FROM Books
-        WHERE title LIKE ?
-        ORDER BY rating DESC`;
-        let params = [`%${search}%`];
+        let sql, params;
+
+        if (category === "title") {
+            sql = `SELECT isbn, title, author, genre, rating, image, published_date
+                   FROM Books
+                   WHERE title LIKE ?`;
+            params = [`%${search}%`];
+        } else if (category === "author") {
+            sql = `SELECT isbn, title, author, genre, rating, image, published_date
+                   FROM Books
+                   WHERE author LIKE ?`;
+            params = [`%${search}%`];
+        }  
+        
         let [rows] = await conn.query(sql, params);
         if (rows.length > 0) {
             // Convert rating
@@ -34,6 +51,7 @@ export const searchBooks = async (search) => {
                 averageRating: row.rating,
                 categories: [row.genre],
                 image: row.image,
+                publishedDate: row.published_date,
             })); 
         }
 
@@ -95,7 +113,7 @@ export const searchBooks = async (search) => {
                     image: thumbnail,
                     description: info.description,
                     publisher: info.publisher,
-                    published_date: formattedPublishedDate,
+                    publishedDate: formattedPublishedDate,
                     page_count: info.pageCount,
                 });
             }
@@ -117,7 +135,7 @@ export const searchBooks = async (search) => {
                                 rating = VALUES(rating),
                                 image = VALUES(image)`;
                 let insertParams = [book.isbn, book.title, book.authors, book.categories, book.description, book.publisher, 
-                                    book.page_count, book.published_date, book.averageRating, book.image];
+                                    book.page_count, book.publishedDate, book.averageRating, book.image];
                 await conn.query(insertSql, insertParams);
             }
         }

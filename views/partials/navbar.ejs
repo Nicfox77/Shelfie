@@ -10,6 +10,10 @@
     <a href="/Explore">Explore</a>
     <a href="/Shelf">Shelf</a>
     <a href="/About">About</a>
+    <% if (user && user.user_type===1) { %>
+        <a href="/admin">Admin</a>
+        <% } %>
+
 </div>
 
 <div class="d-flex justify-content-between">
@@ -22,8 +26,12 @@
     
     <div class="login-container">
         <% if (user) { %>
-            <p>Welcome, <%- user.username%> </p>
-            <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+        <a href="/profile">
+            <div class="logo-wrapper">
+                <p>Welcome, <%- user.firstName%> </p>
+                <img src="<%- user.profile_img ? user.profile_img : '/imgs/icons/accountIcon.svg' %>" alt="Profile Image">
+            </div>
+        </a>
             <div class="divider"></div>
             <a href="/logout">Logout</a>
         <% } else { %>

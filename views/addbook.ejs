@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+    <%- include('partials/navbar') %>
+
+<div class="signContainer">
+    <div class="formContainer">
+        <img src="/imgs/icons/bookIcon.svg" alt="User Icon" class="formIcon">
+        <h1>Add Book</h1>
+        <form action="/admin/addbook" method="POST" class="formStyle">
+            <input type="text" name="title" placeholder="Book Title" required>
+
+            <input type="text" name="author" placeholder="Author Name" required>
+
+            <input type="text" name="description" placeholder="Description" required>
+
+            <input type="number" name="isbn" placeholder="Isbn" required>
+
+            <input type="text" name="publisher" placeholder="publisher" required>
+
+            <input type="date" name="publishDate" placeholder="Publish Date" required>
+
+            <input type="number" name="pageCount" placeholder="Page Count" required>
+
+            <input type="number" min="1" max="5" name="rating" placeholder="Rating" required>
+
+            <input type="text" name="genre" placeholder="Genre" required>
+
+            <input type="text" name="imgUrl" placeholder="Image url" required>
+
+            <div class="adminButton">
+                <button type="submit" class="confirmButton">Confirm</button>
+            </div>
+
+        </form>
+
+        <div class="formFooter">
+        </div>
+    </div>
+</div>
+<%- include('partials/footer') %>

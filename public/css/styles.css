@@ -215,6 +215,11 @@ input[type="text"] {
     align-items: center;
 }
 
+#sort{
+    width: 15%;
+    margin-right: 4.25%;
+}
+
 .searchBtn{
     width: 240px;
     height: 64px;
@@ -462,6 +467,40 @@ input[type="text"] {
 /********** END OF SIGN UP / LOGIN FORM **********/
 
 
+
+
+/********** ADMIN PAGE **********/
+
+.adminPanel{
+    display: flex;
+    justify-content: space-around;
+    padding: 5%;
+}
+
+.panelItem{
+    width: 409px;
+    height: 142px;
+    text-align: center;
+    font-size: 48px;
+    background-color: #D8DBBD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.adminButton{
+    display: flex;
+    justify-content: space-between;
+    background-color: #D8DBBD;
+    gap: 20px;
+    padding: 10px;
+}
+
+
+/********** END OF ADMIN PAGE **********/
+
+
 /********** EDITBOOK PAGE **********/
 .editBookModal {
     background-color: #D8DBBD;
@@ -551,12 +590,102 @@ input[type="text"] {
 }
 /********** END OF EDITBOOK PAGE **********/
 
+
+
+/********** ADMIN PAGE **********/
+
+.adminPanel{
+    display: flex;
+    justify-content: space-around;
+    padding: 5%;
+}
+
+.panelItem{
+    width: 409px;
+    height: 142px;
+    text-align: center;
+    font-size: 48px;
+    background-color: #D8DBBD;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+}
+
+.adminButton{
+    display: flex;
+    justify-content: space-between;
+    background-color: #D8DBBD;
+    gap: 20px;
+    padding: 10px;
+}
+
+.formContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.message {
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.message.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.message.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.adminButton {
+    margin-top: 1.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.confirmButton {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    width: 50% !important;
+    cursor: pointer;
+}
+
+/********** END OF ADMIN PAGE **********/
+
 /********** PROFILE PAGE **********/
 .editable {
     background-color: #f0f0f0 !important;
     border-radius: 5px !important;
 }
+
 .editable:hover {
     cursor: pointer;
 }
+
 /********** END OF PROFILE PAGE **********/

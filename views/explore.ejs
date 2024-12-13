@@ -3,18 +3,40 @@
 
     <h2 class="mt-5">Discover New Reads and Expand Your Shelf</h2>
 
+    <!-- Search form -->
     <div class="exploreSearchForm mt-5">
         <form id="exploreForm">
             <input name="search" type="text" placeholder="Search Book..." class="exploreSearch">
+            <span id="searchError" class="mt-2 mb-0"></span>
+            <!-- Radio button for category -->
+            <div class="searchCategory mt-3">
+                <input type="radio" name="category" value="title" checked>
+                <label for="title" class="me-3">Title</label>
+                <input type="radio" name="category" value="author">
+                <label for="author">Author</label>
+            </div>
             <button class="searchBtn" type="submit">Search</button>
         </form>
     </div>
+
+    <% if (books && books.length > 0) { %>
+        <div class="sortSelect d-flex justify-content-end align-items-center mt-3">
+            <label for="sort" class="me-2">Sort By:</label>
+            <select id="sort" class="form-select">
+                <option value="">Select One</option>
+                <option value="rating">Rating (High to Low)</option>
+                <option value="newest">Newest to Oldest</option>
+                <option value="alphabetical">Alphabetical (A-Z)</option>
+            </select>
+        </div>
     
-    <!-- Display books results from search -->
-    <div id="bookResults" class="row mx-auto mt-4">
-        <% if (books && books.length > 0) { %>
+        <!-- Display books results from search -->
+        <div id="bookResults" class="row mx-auto mt-4">
             <% for (let book of books) { %>
-                <div class="exploreBook d-flex flex-column align-items-center col-12 col-sm-6 col-md-3 mb-4">
+                <div class="exploreBook d-flex flex-column align-items-center col-12 col-sm-6 col-md-3 mb-4" 
+                     data-title="<%= book.title %>" 
+                     data-rating="<%= book.averageRating %>" 
+                     data-published_date="<%= book.publishedDate %>">
                     <!-- Display book cover image -->
                     <div class="imgDiv mb-2">
                         <a href="/Explore/bookView?isbn=<%= book.isbn %>">
@@ -23,14 +45,12 @@
                     </div>
     
                     <div class="exploreBookInfo d-flex justify-content-between mt-1">
-                        <!-- Display title and author -->
                         <div class="text-start">
                             <a href="/Explore/bookView?isbn=<%= book.isbn %>">
                                 <h4 class="mb-0"><%= book.title %></h4>
                             </a>  
                             <p class="exploreAuthor"><%= book.authors %></p>
                         </div>
-                        <!-- Display rating and category -->
                         <div class="text-end">
                             <% if (book.averageRating) { %>
                                 <div class="d-flex justify-content-end mb-1">
@@ -47,9 +67,12 @@
                     </div>
                 </div>
             <% } %>
-        <% } %>
-    </div>
+        </div>
+    <% } %>
+    
     
     <%- include('partials/footer') %>
+
+<script src="/js/explore.js"></script>
 </body>
 </html>

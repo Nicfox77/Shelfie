@@ -36,8 +36,10 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use((req, res, next) => {
+app.use((req, res, next) =>
+{
     res.locals.user = req.user || null;
+    res.locals.isAdmin = req.user && req.user.user_type === 1;
     next();
 });
 
@@ -53,7 +55,8 @@ import bookRoutes from './routes/books.mjs';
 import loginRoutes from './routes/login.mjs';
 import indexRoutes from './routes/index.mjs';
 import dbTestRoutes from './routes/dbtest.mjs';
-//import shelfRoutes from './routes/Shelf.mjs';
+import adminRoutes from './routes/admin.mjs';
+import profileRoutes from './routes/profile.mjs';
 
 // Add the database test route
 app.use('/', dbTestRoutes);
@@ -63,5 +66,10 @@ app.use('/', indexRoutes);
 app.use('/', loginRoutes);
 // Explore page route
 app.use('/', bookRoutes);
+//Admin page route
+app.use('/', adminRoutes);
+
+// profile route
+app.use('/profile', profileRoutes);
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
