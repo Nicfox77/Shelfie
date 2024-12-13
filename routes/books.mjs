@@ -8,12 +8,11 @@ const router = Router();
 // Explore Page Route
 router.get('/Explore', async (req, res) => {
     const search = req.query.search || ""; // Get 'search' query parameter
-    const category = req.query.category || "title"; // Get category parameter (default title)
     let books = [];
 
     if (search) {
         // Fetch books if a search term is provided
-        books = await bookController.searchBooks(search, category);
+        books = await bookController.searchBooks(search);
     }
 
     res.render('explore', { books, user: req.user });
@@ -70,7 +69,7 @@ router.post('/shelf/remove/:isbn', async (req, res) => {
     const userId = req.body.user_id; // Get the user ID from the form data
 
     try {
-        await removeBookFromShelf(userId, isbn); // Await the removal function
+        await removeBookFromUserBooks(userId, isbn); // Await the removal function
         res.redirect('/shelf'); // Redirect back to the shelf page after removal
     } catch (err) {
         console.error(err);
@@ -79,10 +78,10 @@ router.post('/shelf/remove/:isbn', async (req, res) => {
 });
 
 
-async function removeBookFromShelf(userId, isbn) {
+async function removeBookFromUserBooks(userId, isbn) {
     const conn = await pool.getConnection(); // Await the connection
     try {
-        const query = 'DELETE FROM shelves WHERE user_id = ? AND isbn = ?';
+        const query = 'DELETE FROM UserBooks WHERE user_id = ? AND isbn = ?';
         const [results] = await conn.query(query, [userId, isbn]); // Use await for the query
         return results; // Return the results
     } catch (error) {
