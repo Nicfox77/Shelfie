@@ -3,24 +3,28 @@
     {
       "name": "ShelfieApp",
       "script": "./app.mjs",
-      "watch": true,
+      "instances": "max",
+      "exec_mode": "cluster",
+      "watch": false,
       "ignore_watch": [
-        "node_modules",  // Prevent watching node_modules
-        "logs",          // Prevent watching logs directory
-        "*.log",         // Ignore specific log files
-        ".git",          // Ignore git-related changes
-        "tmp"            // Ignore temporary files
+        "node_modules",
+        "logs",
+        "*.log",
+        ".git",
+        "tmp"
       ],
-      "watch_options": {
-        "followSymlinks": false, // Avoid symlink loops
-        "usePolling": true       // Polling is safer for network filesystems
-      },
       "env": {
         "NODE_ENV": "development"
       },
       "env_production": {
         "NODE_ENV": "production"
-      }
+      },
+      "log_date_format": "YYYY-MM-DD HH:mm Z",
+      "error_file": "./logs/error.log",
+      "out_file": "./logs/output.log",
+      "merge_logs": true,
+      "max_restarts": 5,
+      "min_uptime": "1m"
     }
   ]
 }
