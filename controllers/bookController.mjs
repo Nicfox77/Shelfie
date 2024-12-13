@@ -3,13 +3,13 @@ import dotenv from 'dotenv';
 import pool from '../config/db.mjs';
 
 // Function to search for books using API
-export const searchBooks = async (search, category) => {
+export const searchBooks = async (search, category="title") => {
     const apiKey = process.env.API_KEY;
     // Set API search category
-    let queryCategory;
-    if (category === "title") {
-        queryCategory = "intitle";
-    } else if (category === "author") {
+    let queryCategory = "intitle"; // Default to title search
+
+    if (category === "author")
+    {
         queryCategory = "inauthor";
     }
     

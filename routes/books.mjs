@@ -7,12 +7,13 @@ const router = Router();
 
 // Explore Page Route
 router.get('/Explore', async (req, res) => {
-    const search = req.query.search || ""; // Get 'search' query parameter
+    const search = req.query.search || "";
+    const category = req.query.category || "title"; // Add default category
     let books = [];
 
-    if (search) {
-        // Fetch books if a search term is provided
-        books = await bookController.searchBooks(search);
+    if (search)
+    {
+        books = await bookController.searchBooks(search, category);
     }
 
     res.render('explore', { books, user: req.user });
