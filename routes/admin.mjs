@@ -28,7 +28,7 @@ router.post('/admin/addbook', ensureAdmin, async (req, res) =>
     let genre = req.body.genre;
     let imgUrl = req.body.imgUrl;
 
-    let params = [isbn, title, author, description, publisher, publishDate, pageCount, rating, genre, imgUrl];
+    let params = [isbn, title, author, genre, description, publisher, pageCount, publishDate, rating, imgUrl];
     let conn;
 
     try
